@@ -1,9 +1,10 @@
 import Logo from "./Logo";
+import "./Sidenav.css";
 
 function Sidenav() {
   return (
     <aside id="sidenav">
-        <Logo />
+      <Logo />
     </aside>
   );
 }

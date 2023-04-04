@@ -7,7 +7,9 @@ function AppLayout() {
     <div id="layout-app">
       <Sidenav />
       <Topnav />
-      <Outlet />
+      <div class="pl-64 pt-14">
+        <Outlet />
+      </div>
     </div>
   );
   s;

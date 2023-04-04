@@ -1,30 +1,26 @@
 import { useEffect, useState, useContext } from "react";
-import useUserContext from "../context/User";
+import useUserContext from "../context/UserContext";
 import Demo from "../components/Demo";
 
 const UserContext = useUserContext();
 
 function Dashboard() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
-  const refresh = async () => {
-    const req = await fetch("https://prod.tradify.dk/auth/refresh", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: "********",
-      }),
-    }).then((res) => res.json());
+  const value = {
+    user: user,
+    setUser: setUser,
+  };
 
-    setUser(req);
+  const handleClick = (e) => {
+    console.log(e)
+    setUser("Hello World")
   };
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={value}>
       <Demo />
-      <button onClick={refresh}>Hent data</button>
+      <button onClick={handleClick}>Hent data</button>
     </UserContext.Provider>
   );
 }

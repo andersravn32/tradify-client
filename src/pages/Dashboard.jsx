@@ -1,28 +1,24 @@
-import { useEffect, useState, useContext } from "react";
-import useUserContext from "../context/UserContext";
-import Demo from "../components/Demo";
+import { useContext, useEffect } from "react";
+import useAuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const UserContext = useUserContext();
+const AuthContext = useAuthContext();
 
 function Dashboard() {
-  const [user, setUser] = useState(null);
+  const { auth, setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const value = {
-    user: user,
-    setUser: setUser,
-  };
+  useEffect(() => {
+    const authGuard = () => {
+      if (!auth) {
+        return navigate("/signin");
+      }
+    };
 
-  const handleClick = (e) => {
-    console.log(e)
-    setUser("Hello World")
-  };
+    authGuard();
+  }, [auth, navigate]);
 
-  return (
-    <UserContext.Provider value={value}>
-      <Demo />
-      <button onClick={handleClick}>Hent data</button>
-    </UserContext.Provider>
-  );
+  return <></>;
 }
 
 export default Dashboard;

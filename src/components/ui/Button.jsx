@@ -1,8 +1,10 @@
-import { ButtonType, ButtonSizes } from "../../themes/light";
+import theme from "../../themes/theme";
 
-function Button({ size, type, children }) {
-  const classNames = ButtonSizes[size] + " " + ButtonType[type];
-  return <button className={classNames}>{children}</button>;
+function Button({ size, type = "primary", children, loading = false }) {
+  const classNames = theme.ButtonSizes[size] + " " + theme.ButtonTypes[type];
+  return (
+    <button className={classNames}>{!loading ? children : "Loading.."}</button>
+  );
 }
 
 export default Button;

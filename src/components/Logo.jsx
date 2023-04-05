@@ -1,11 +1,15 @@
-import "./Logo.css"
+import "./Logo.css";
 
-function Logo() {
+function Logo(props) {
   return (
     <img
       className="logo"
       crossOrigin="anonymous"
-      src="https://prod.tradify.dk/content/public/tradify_logo.svg"
+      src={
+        props.light
+          ? "https://prod.tradify.dk/content/public/tradify_logo_light.svg"
+          : "https://prod.tradify.dk/content/public/tradify_logo.svg"
+      }
       alt="Tradify Logo"
     />
   );

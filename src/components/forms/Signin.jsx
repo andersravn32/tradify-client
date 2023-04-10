@@ -68,6 +68,7 @@ function FormSignin() {
   return (
     <>
       <form
+        id="form-signin"
         className="w-full max-w-sm flex flex-col space-y-4"
         onSubmit={signin}
       >

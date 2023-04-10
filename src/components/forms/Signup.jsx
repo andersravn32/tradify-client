@@ -93,6 +93,7 @@ function FormSignup() {
   return (
     <>
       <form
+        id="form-signup"
         className="w-full max-w-md flex flex-col space-y-4"
         onSubmit={signup}
       >

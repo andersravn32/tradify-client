@@ -1,10 +1,10 @@
-import FormSignin from "../components/forms/Signin";
+import FormSignup from "../components/forms/Signup";
 
 function Signin() {
   return (
     <>
       <div className="h-screen grid place-items-center">
-        <FormSignin />
+        <FormSignup />
       </div>
     </>
   );

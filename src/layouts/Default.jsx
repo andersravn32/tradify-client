@@ -9,12 +9,42 @@ const AuthContext = useAuthContext();
 function DefaultLayout() {
   const [auth, setAuth] = useState(null);
 
+  const accessToken =
+    sessionStorage.getItem("accessToken") ||
+    localStorage.getItem("accessToken");
+  const refreshToken =
+    sessionStorage.getItem("refreshToken") ||
+    localStorage.getItem("refreshToken");
+
+  useEffect(() => {
+    const refresh = async () => {
+      if (!refreshToken) {
+        return;
+      }
+
+      const { data, errors } = await fetch(
+        "https://prod.tradify.dk/auth/refresh",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: refreshToken,
+          }),
+        }
+      ).then((res) => res.json());
+
+      setAuth(data);
+    };
+
+    refresh();
+  }, []);
+
   return (
     <>
       <AuthContext.Provider value={{ auth, setAuth }}>
-        <Sidenav />
-        <Topnav />
-        <main className="pl-64 pt-[72px]">
+        <main>
           <Outlet />
         </main>
       </AuthContext.Provider>

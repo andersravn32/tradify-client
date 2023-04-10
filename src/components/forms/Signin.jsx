@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import useAuthContext from "../../context/AuthContext";
@@ -14,6 +14,20 @@ function FormSignin() {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const signinCallback = () => {
+      if (!auth) {
+        return;
+      }
+
+      return navigate("/dashboard");
+    };
+
+    signinCallback();
+  }, [auth]);
 
   const signin = async (e) => {
     e.preventDefault();

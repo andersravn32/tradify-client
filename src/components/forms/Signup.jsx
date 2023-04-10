@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAuthContext from "../../context/AuthContext";
 
 const AuthContext = useAuthContext();
@@ -18,6 +18,20 @@ function FormSignup() {
   const [guidelines, setGuidelines] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const signupCallback = () => {
+      if (!auth) {
+        return;
+      }
+
+      return navigate("/dashboard");
+    };
+
+    signupCallback();
+  }, [auth]);
 
   const signup = async (e) => {
     e.preventDefault();
@@ -71,7 +85,7 @@ function FormSignup() {
     // Set localStorage
     localStorage.setItem("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
-    
+
     // Set auth state in context
     return setAuth(data);
   };

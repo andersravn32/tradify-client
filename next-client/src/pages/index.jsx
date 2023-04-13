@@ -1,12 +1,16 @@
 import { Rubik } from 'next/font/google'
-import FormSignin from '../components/Forms/Signin'
+import { useEffect } from "react";
 
 const rubik = Rubik({ subsets: ['latin'] })
 
 export default function Home() {
+  useEffect(() => {
+    console.log("Mounted home")
+}, [])
+
   return (
     <main className={rubik.className}>
-      <FormSignin />
+      <h1>Index</h1>
     </main>
   )
 }

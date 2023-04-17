@@ -4,4 +4,6 @@ definePageMeta({
 })
 </script>
 
-<section id="page-services"></section>
+<template>
+    <section id="page-services"></section>
+</template>

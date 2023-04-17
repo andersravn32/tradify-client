@@ -20,24 +20,21 @@ defineEmits(['click']);
 </template>
 
 <style>
-.btn-size-xs {
-    @apply py-0.5 px-1.5 text-xs;
-}
 
 .btn-size-sm {
-    @apply py-1 px-3 text-sm;
+    @apply py-1 px-3 text-xs;
 }
 
 .btn-size-md {
-    @apply py-2 px-6 text-base;
+    @apply py-2 px-6 text-sm;
 }
 
 .btn-size-lg {
-    @apply py-3 px-9 text-lg;
+    @apply py-3 px-9 text-base;
 }
 
 .btn-size-xl {
-    @apply py-4 px-12 text-xl;
+    @apply py-4 px-12 text-lg;
 }
 
 .btn-primary {

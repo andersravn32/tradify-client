@@ -41,7 +41,7 @@ defineEmits(['click']);
 }
 
 .btn-primary {
-    @apply bg-indigo-500 text-zinc-100 font-semibold rounded shadow-sm hover:bg-indigo-600 focus:outline-indigo-500;
+    @apply bg-indigo-500 font-semibold rounded shadow-sm hover:bg-indigo-600 focus:outline-indigo-500;
 }
 
 .btn-secondary {

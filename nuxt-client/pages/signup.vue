@@ -1,9 +1,11 @@
 <script setup>
 definePageMeta({
-    layout: "default"
+    layout: "auth"
 })
 </script>
 
 <template>
-    <section id="page-index"></section>
+    <section id="page-signup">
+
+    </section>
 </template>

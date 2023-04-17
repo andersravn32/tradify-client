@@ -5,5 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-    <section id="page-index"></section>
+    <section id="page-about"></section>
 </template>

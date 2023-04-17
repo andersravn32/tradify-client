@@ -35,7 +35,7 @@ header {
 }
 
 header .router-link {
-    @apply font-semibold;
+    @apply font-semibold text-sm;
 }
 
 header ul {

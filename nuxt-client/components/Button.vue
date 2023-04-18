@@ -7,20 +7,22 @@ defineProps({
     size: {
         type: String,
         default: "md"
+    },
+
+    loading: {
+        type: Boolean,
+        default: false
     }
 })
-
-defineEmits(['click']);
 </script>
 
 <template>
-    <button :class="`btn btn-size-${size} btn-${type}`" @click.prevent="e => $emit('click', e)">
+    <button :class="`btn btn-size-${size} btn-${type}`">
         <slot />
     </button>
 </template>
 
 <style>
-
 .btn-size-sm {
     @apply py-1 px-3 text-xs;
 }

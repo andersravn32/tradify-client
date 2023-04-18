@@ -35,7 +35,11 @@ header {
 }
 
 header .router-link {
-    @apply font-semibold text-sm;
+    @apply font-semibold text-sm text-zinc-100/75 hover:text-zinc-100;
+}
+
+header .router-link-active, header .router-link-exact-active {
+    @apply text-zinc-100;
 }
 
 header ul {

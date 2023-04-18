@@ -11,5 +11,12 @@
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.6.6",
     "nuxt": "^3.4.1"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.8",
+    "pinia": "^2.0.34"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

@@ -36,7 +36,7 @@ const signup = async () => {
     })
         .then(res => res.json())
 
-        
+
 }
 </script>
 
@@ -51,10 +51,10 @@ const signup = async () => {
                 <Input type="text" placeholder="Indtast brugernavn" label="Brugernavn" />
                 <Input type="email" placeholder="Indtast e-mail" label="E-mail" />
                 <Input type="password" placeholder="Indtast password" label="Password" />
-                <p class="text-sm text-zinc-100/75">Ved at oprette en konto acceptere du Tradify's <a
+                <p class="text-sm text-zinc-400">Ved at oprette en konto acceptere du Tradify's <a
                         class="text-indigo-500 hover:text-indigo-600" href="#">vilkår og betingelser</a></p>
                 <Button>Opret konto</Button>
-                <p class="text-center text-sm text-zinc-100/75">Har du allerede en konto? <NuxtLink
+                <p class="text-center text-sm text-zinc-400">Har du allerede en konto? <NuxtLink
                         class="text-indigo-500 hover:text-indigo-600" to="/signin">Log på</NuxtLink>
                 </p>
             </div>

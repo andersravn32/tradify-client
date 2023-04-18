@@ -71,16 +71,16 @@ const signin = async () => {
             </NuxtLink>
             <div class="border-2 border-zinc-800 p-8 rounded flex flex-col space-y-4">
                 <h2 class="text-2xl">Log på</h2>
-                <Input type="email" placeholder="Indtast e-mail" label="E-mail" @input="e => credentials.email = e.value" />
+                <Input type="email" placeholder="Indtast e-mail" label="E-mail" @input="e => body.email = e.value" />
                 <Input type="password" placeholder="Indtast password" label="Password"
-                    @input="e => credentials.password = e.value" />
+                    @input="e => body.password = e.value" />
                 <div class="flex justify-end">
-                    <NuxtLink class="text-xs text-zinc-100/75 hover:text-zinc-100" to="/">Glemt password?</NuxtLink>
+                    <NuxtLink class="text-sm text-indigo-500 hover:text-indigo-600" to="/">Glemt password?</NuxtLink>
                 </div>
                 <Button :loading="loading">Log på</Button>
                 <div class="flex justify-between items-center space-x-4">
                     <span class="border border-zinc-800 w-full"></span>
-                    <span class="text-sm text-zinc-50/75">Eller</span>
+                    <span class="text-sm text-zinc-400">Eller</span>
                     <span class="border border-zinc-800 w-full"></span>
                 </div>
                 <Button @click.prevent="router.push('/signup')" type="secondary">Opret konto</Button>
@@ -95,6 +95,6 @@ const signin = async () => {
 }
 
 #form-signin {
-    @apply w-full max-w-sm flex flex-col space-y-4;
+    @apply w-full max-w-md flex flex-col space-y-4;
 }
 </style>

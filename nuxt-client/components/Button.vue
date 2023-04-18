@@ -17,8 +17,9 @@ defineProps({
 </script>
 
 <template>
-    <button :class="`btn btn-size-${size} btn-${type}`">
-        <slot />
+    <button :class="`btn btn-size-${size} btn-${type} ${loading ? 'btn-loading' : null}`">
+        <slot v-if="!loading" />
+        <span v-if="loading">Loading...</span>
     </button>
 </template>
 
@@ -49,5 +50,9 @@ defineProps({
 
 .btn-tertiary {
     @apply text-indigo-500 hover:text-indigo-600 focus:outline-indigo-500 py-0 px-0;
+}
+
+.btn-loading {
+    @apply opacity-90 cursor-not-allowed;
 }
 </style>

@@ -39,11 +39,11 @@ const value = ref(null);
 }
 
 .input input {
-    @apply bg-zinc-800 rounded;
+    @apply bg-zinc-800 rounded outline-indigo-500;
 }
 
 .input label {
-    @apply text-zinc-50/75 uppercase;
+    @apply text-zinc-400 uppercase;
 }
 
 .input-size-sm label {

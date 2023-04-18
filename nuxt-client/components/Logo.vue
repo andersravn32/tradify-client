@@ -19,7 +19,7 @@ defineProps({
 
 <style>
 .logo-xs {
-    @apply h-8;
+    @apply h-10;
 }
 
 .logo-sm {

@@ -1,12 +1,20 @@
 import useAuthStore from "~/stores/AuthStore";
 import { storeToRefs } from "pinia";
 
-export default defineNuxtRouteMiddleware(() => {
+export default defineNuxtRouteMiddleware(async () => {
+  const refreshToken = useCookie("refreshToken");
   const authStore = useAuthStore();
-  const authStoreRefs = storeToRefs(authStore);
 
-  if (!authStoreRefs.user.value) {
+  if (!refreshToken.value) {
     return "/signin";
+  }
+
+  if (!storeToRefs(authStore).user.value) {
+    const { errors } = await authStore.refresh();
+    if (errors.length) {
+      authStore.clear();
+      return "/signin";
+    }
   }
 
   return true;

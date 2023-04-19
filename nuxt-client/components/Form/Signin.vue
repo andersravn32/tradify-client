@@ -25,37 +25,18 @@ const signin = async () => {
   loading.value = true;
 
   // Request signin
-  const { data, errors } = await fetch(
-    "https://prod.tradify.dk/auth/provider/email/signin",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body.value),
-    }
-  ).then((res) => res.json());
+  const { errors } = await authStore.signin(
+    body.value.email,
+    body.value.password
+  );
 
   // Update loading state
   loading.value = false;
 
-  if (errors.length) {
+  if (errors) {
     // TODO: Error handling
     return;
   }
-
-  // Set accessToken cookie
-  const accessToken = useCookie("accessToken");
-  accessToken.value = data.accessToken;
-  authStoreRefs.accessToken.value = data.accessToken;
-
-  // Set refreshToken cookie
-  const refreshToken = useCookie("refreshToken");
-  refreshToken.value = data.refreshToken;
-  authStoreRefs.refreshToken.value = data.refreshToken;
-
-  // Set user object in store
-  authStoreRefs.user.value = data.user;
 
   // Redirect to dashboard
   return router.push("/dashboard");

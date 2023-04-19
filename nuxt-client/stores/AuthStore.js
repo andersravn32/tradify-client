@@ -5,6 +5,14 @@ const useAuthStore = defineStore("auth", () => {
   const refreshToken = useCookie("refreshToken");
   const user = ref(null);
 
+  const clear = () => {
+    accessToken.value = null;
+    refreshToken.value = null;
+    user.value = null;
+
+    return { accessToken, refreshToken, user };
+  };
+
   const refresh = async () => {
     // Request refreshed data
     const { data, errors } = await fetch(
@@ -19,10 +27,8 @@ const useAuthStore = defineStore("auth", () => {
     ).then((res) => res.json());
 
     // If errors occurred, reset store state
-    if (errors.length) {
-      accessToken.value = null;
-      refreshToken.value = null;
-      user.value = null;
+    if (errors) {
+      clear();
       return { data, errors };
     }
 
@@ -35,7 +41,62 @@ const useAuthStore = defineStore("auth", () => {
     return { data, errors };
   };
 
-  return { accessToken, refreshToken, user, refresh };
+  const signout = async () => {
+    const { data, errors } = await fetch(
+      "https://prod.tradify.dk/auth/signout",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: refreshToken.value,
+        }),
+      }
+    ).then((res) => res.json());
+
+    // If errors are present, return errors
+    if (errors) {
+      return { data, errors };
+    }
+
+    // Reset store state
+    clear();
+    return { data, errors };
+  };
+
+  const signin = async (email, password) => {
+    if (!email || !password) {
+      return;
+    }
+
+    const { data, errors } = await fetch(
+      "https://prod.tradify.dk/auth/provider/email/signin",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      }
+    ).then((res) => res.json());
+
+    // If errors are present, return errors before setting state
+    if (errors) {
+      clear();
+      return { data, errors };
+    }
+
+    // Set response data
+    accessToken.value = data.accessToken;
+    refreshToken.value = data.refreshToken;
+    user.value = data.user;
+
+    // Return data and errors
+    return { data, errors };
+  };
+
+  return { accessToken, refreshToken, user, clear, refresh, signin, signout };
 });
 
 export default useAuthStore;

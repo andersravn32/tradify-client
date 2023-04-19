@@ -3,7 +3,8 @@ import useAuthStore from "../stores/AuthStore";
 import { storeToRefs } from "pinia";
 
 definePageMeta({
-    layout: "auth"
+    layout: "auth",
+    name: "Opret konto"
 })
 
 const authStore = useAuthStore();

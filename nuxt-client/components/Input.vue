@@ -27,7 +27,7 @@ const value = ref(null);
 
 <template>
     <div :class="`input input-size-${size}`">
-        <label :for="label">{{ label }}</label>
+        <label v-if="label" :for="label">{{ label }}</label>
         <input :type="type" :placeholder="placeholder ? placeholder : null" v-model="value"
             @input="(e) => { $emit('input', { ...e, value }) }" />
     </div>
@@ -39,7 +39,7 @@ const value = ref(null);
 }
 
 .input input {
-    @apply bg-zinc-800 rounded outline-indigo-500;
+    @apply bg-zinc-800 rounded outline-indigo-500 text-zinc-50;
 }
 
 .input label {

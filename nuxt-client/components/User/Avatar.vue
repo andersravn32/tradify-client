@@ -21,7 +21,7 @@ defineProps({
 <template>
   <div class="user-avatar" :class="`user-avatar-${size}`">
     <img
-      class="h-full w-full"
+      class="h-full w-full rounded-full"
       crossorigin="anonymous"
       :src="`${url}?token=${authStoreRefs.accessToken.value}`"
       alt="User avatar"

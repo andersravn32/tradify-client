@@ -20,18 +20,7 @@ const router = useRouter();
     <ul class="flex items-center space-x-8">
       <li><Button>Opret handel</Button></li>
       <li>
-        <div class="user">
-          <div class="flex flex-col text-right">
-            <span class="text-sm font-semibold">{{
-              authStoreRefs.user.value.profile.firstName
-            }}</span>
-            <span class="text-xs text-zinc-400"
-              >@{{ authStoreRefs.user.value.identifier }}</span
-            >
-          </div>
-          <UserAvatar size="sm" :url="authStoreRefs.user.value.profile.avatar" />
-          <UserCard :user="authStoreRefs.user.value"/>
-        </div>
+        <UserSmall :user="authStoreRefs.user.value" />
       </li>
     </ul>
   </nav>
@@ -39,22 +28,22 @@ const router = useRouter();
 
 <style>
 #topnav {
-  @apply fixed top-0 right-0 left-64 p-4 border-b-2 border-zinc-800 flex justify-between items-center text-zinc-100;
+  @apply fixed top-0 right-0 left-64 p-4 border-b-2 border-zinc-800 flex justify-between items-center text-zinc-100 z-10;
 }
 
-.user {
-  @apply flex items-center space-x-4 relative;
+#topnav .user {
+  @apply flex-row-reverse space-x-0;
 }
 
-.user-card {
-  @apply bg-zinc-800 shadow-lg w-64 absolute right-0 top-full flex flex-col p-4 rounded space-y-4;
+#topnav .user .user-avatar {
+  @apply ml-4;
 }
 
-.user-card .router-link {
-  @apply flex items-center space-x-4 rounded font-semibold text-sm text-zinc-400 hover:text-zinc-100;
+#topnav .user-card .user-avatar {
+  @apply ml-auto;
 }
 
-.user-card .signout {
-  @apply text-red-500 hover:text-red-600;
+#topnav .user .user-details {
+  @apply text-right;
 }
 </style>

@@ -11,7 +11,7 @@ export default defineNuxtRouteMiddleware(async () => {
 
   if (!storeToRefs(authStore).user.value) {
     const { errors } = await authStore.refresh();
-    if (errors.length) {
+    if (errors) {
       authStore.clear();
       return "/signin";
     }

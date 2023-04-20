@@ -7,5 +7,7 @@ definePageMeta({
 </script>
 
 <template>
-  <section id="page-dashboard"></section>
+  <section id="page-dashboard">
+    <FormTradeCreate />
+  </section>
 </template>

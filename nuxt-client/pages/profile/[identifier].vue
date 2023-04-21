@@ -13,7 +13,7 @@ const authStore = useAuthStore();
 const runtimeConfig = useRuntimeConfig();
 
 const { data, errors } = await fetch(
-  `${runtimeConfig.backendUrl}/users/${router.currentRoute.value.params.identifier}`,
+  `${runtimeConfig.public.backendUrl}/users/${router.currentRoute.value.params.identifier}`,
   {
     method: "GET",
     headers: {

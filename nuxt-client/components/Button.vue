@@ -56,6 +56,10 @@ defineProps({
   @apply font-semibold text-indigo-500 hover:text-indigo-600 focus:outline-indigo-500 py-0 px-0;
 }
 
+.btn-icon{
+  @apply bg-zinc-800 p-2 rounded-full hover:bg-zinc-700;
+}
+
 .btn-loading {
   @apply opacity-90 cursor-not-allowed;
 }

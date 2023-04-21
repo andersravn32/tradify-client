@@ -2,6 +2,8 @@
 export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
   runtimeConfig: {
-    backendUrl: "https://prod.tradify.dk",
+    public: {
+      backendUrl: "http://localhost:4000",
+    },
   },
 });

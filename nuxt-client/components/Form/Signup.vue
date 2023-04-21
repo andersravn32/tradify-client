@@ -29,7 +29,7 @@ const signup = async () => {
   loading.value = true;
 
   const { data, errors } = await fetch(
-    `${runtimeConfig.backendUrl}/auth/provider/email/signup`,
+    `${runtimeConfig.public.backendUrl}/auth/provider/email/signup`,
     {
       method: "POST",
       headers: {
@@ -42,7 +42,7 @@ const signup = async () => {
   // Update loading state
   loading.value = false;
 
-  if (errors.length) {
+  if (errors) {
     // TODO: Error handling
     return;
   }
@@ -59,7 +59,7 @@ const signup = async () => {
   authStoreRefs.user.value = data.user;
 
   // Redirect to dashboard
-  return router.push("/dashboard");
+  return router.push("/onboarding");
 };
 </script>
 
@@ -70,16 +70,31 @@ const signup = async () => {
     </NuxtLink>
     <div class="border-2 border-zinc-800 rounded p-8 flex flex-col space-y-4">
       <h2 class="text-2xl">Opret konto</h2>
-      <Input type="text" placeholder="Indtast brugernavn" label="Brugernavn" />
-      <Input type="email" placeholder="Indtast e-mail" label="E-mail" />
-      <Input type="password" placeholder="Indtast password" label="Password" />
+      <Input
+        @input="(e) => (body.identifier = e.value)"
+        type="text"
+        placeholder="Indtast brugernavn"
+        label="Brugernavn"
+      />
+      <Input
+        @input="(e) => (body.email = e.value)"
+        type="email"
+        placeholder="Indtast e-mail"
+        label="E-mail"
+      />
+      <Input
+        @input="(e) => (body.password = e.value)"
+        type="password"
+        placeholder="Indtast password"
+        label="Password"
+      />
       <p class="text-sm text-zinc-400">
         Ved at oprette en konto acceptere du Tradify's
         <a class="text-indigo-500 hover:text-indigo-600" href="#"
           >vilkår og betingelser</a
         >
       </p>
-      <Button>Opret konto</Button>
+      <Button :loading="loading">Opret konto</Button>
       <p class="text-center text-sm text-zinc-400">
         Har du allerede en konto?
         <NuxtLink class="text-indigo-500 hover:text-indigo-600" to="/signin"

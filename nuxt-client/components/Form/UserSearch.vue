@@ -16,7 +16,7 @@ const search = async (e) => {
   }
 
   const { data, errors } = await fetch(
-    `${runtimeConfig.backendUrl}/users/${e.value}`,
+    `${runtimeConfig.public.backendUrl}/users/${e.value}`,
     {
       method: "GET",
       headers: {

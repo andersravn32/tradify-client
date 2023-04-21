@@ -22,7 +22,7 @@ const user = ref({
 
 if (!user.value.trades) {
   const { data, errors } = await fetch(
-    `${runtimeConfig.backendUrl}/user/${user.value.uuid}`,
+    `${runtimeConfig.public.backendUrl}/user/${user.value.uuid}`,
     {
       method: "GET",
       headers: {
@@ -39,7 +39,7 @@ if (!user.value.trades) {
   <div class="user-profile">
     <div class="user-profile-header">
       <UserCover :url="user.profile.cover">
-        <UserAvatar size="xl" :url="user.profile.avatar"
+        <UserAvatar class="shadow-lg" size="xl" :url="user.profile.avatar"
       /></UserCover>
       <div class="flex items-center justify-between px-4">
         <div class="user-details">
@@ -47,7 +47,7 @@ if (!user.value.trades) {
             user.profile.firstName
           }}</span>
           <span class="text-zinc-400">@{{ user.identifier }}</span>
-          <UserRole :role="user.role" />
+          <UserRole v-if="user.role.permissionLevel >= 3" class="mt-2" :role="user.role" />
         </div>
         <div class="user-options">
           <Button type="icon"

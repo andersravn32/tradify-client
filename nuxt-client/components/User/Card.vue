@@ -27,7 +27,7 @@ const user = ref({
 
 if (!user.value.trades) {
   const { data, errors } = await fetch(
-    `${runtimeConfig.backendUrl}/user/${user.value.uuid}`,
+    `${runtimeConfig.public.backendUrl}/user/${user.value.uuid}`,
     {
       method: "GET",
       headers: {

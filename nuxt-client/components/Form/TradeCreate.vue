@@ -30,7 +30,7 @@ const create = async () => {
   // Update loading state
   loading.value = true;
 
-  const { data, errors } = await fetch(`${runtimeConfig.backendUrl}/trades`, {
+  const { data, errors } = await fetch(`${runtimeConfig.public.backendUrl}/trades`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

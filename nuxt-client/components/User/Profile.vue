@@ -71,7 +71,7 @@ if (!user.value.trades) {
       <li class="text-zinc-400 flex items-center space-x-2">
         <ArrowsRightLeftIcon class="h-6 w-6" />
         <span>Handler:</span>
-        <TradeCounter size="sm" :trades="user.trades" :userId="user.uuid" />
+        <TradeCounter size="sm" :trades="user.trades" :uuid="user.uuid" />
       </li>
       <li class="text-zinc-400 flex items-center space-x-2">
         <CalendarIcon class="h-6 w-6" />

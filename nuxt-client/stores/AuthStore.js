@@ -18,7 +18,7 @@ const useAuthStore = defineStore("auth", () => {
   const refresh = async () => {
     // Request refreshed data
     const { data, errors } = await fetch(
-      `${runtimeConfig.backendUrl}/auth/refresh`,
+      `${runtimeConfig.public.backendUrl}/auth/refresh`,
       {
         method: "POST",
         headers: {
@@ -45,7 +45,7 @@ const useAuthStore = defineStore("auth", () => {
 
   const signout = async () => {
     const { data, errors } = await fetch(
-      `${runtimeConfig.backendUrl}/auth/signout`,
+      `${runtimeConfig.public.backendUrl}/auth/signout`,
       {
         method: "POST",
         headers: {
@@ -73,7 +73,7 @@ const useAuthStore = defineStore("auth", () => {
     }
 
     const { data, errors } = await fetch(
-      `${runtimeConfig.backendUrl}/auth/provider/email/signin`,
+      `${runtimeConfig.public.backendUrl}/auth/provider/email/signin`,
       {
         method: "POST",
         headers: {

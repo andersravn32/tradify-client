@@ -4,6 +4,7 @@ import {
   EllipsisHorizontalIcon,
   CalendarIcon,
 } from "@heroicons/vue/24/outline";
+import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 
@@ -43,11 +44,17 @@ if (!user.value.trades) {
       /></UserCover>
       <div class="flex items-center justify-between px-4">
         <div class="user-details">
-          <span class="text-2xl pt-2 font-semibold text-zinc-50">{{
-            user.profile.firstName
-          }}</span>
+          <span
+            class="text-2xl pt-2 font-semibold text-zinc-50 flex items-center space-x-2"
+            ><span>{{ user.profile.firstName }}</span>
+            <CheckBadgeIcon v-if="user.verified" class="h-6 w-6 text-sky-500"
+          /></span>
           <span class="text-zinc-400">@{{ user.identifier }}</span>
-          <UserRole v-if="user.role.permissionLevel >= 3" class="mt-2" :role="user.role" />
+          <UserRole
+            v-if="user.role.permissionLevel >= 3"
+            class="mt-2"
+            :role="user.role"
+          />
         </div>
         <div class="user-options">
           <Button type="icon"

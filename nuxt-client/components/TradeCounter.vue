@@ -4,6 +4,10 @@ const props = defineProps({
     type: Array,
     required: false,
   },
+  size: {
+    type: String,
+    default: "md",
+  },
   userId: {
     type: String,
     required: true,
@@ -49,9 +53,17 @@ props.trades.forEach((trade) => {
 
 <template>
   <div
+    v-if="size == 'md'"
     class="w-full grid grid-cols-5 place-items-center bg-zinc-900 p-4 font-semibold rounded text-zinc-400"
   >
     <span class="text-green-500">{{ counts.positive }}</span> <span>/</span
+    ><span class="text-zinc-100">{{ counts.neutral }}</span
+    ><span>/</span>
+    <span class="text-red-500">{{ counts.negative }}</span>
+  </div>
+
+  <div v-if="size == 'sm'" class="text-zinc-400">
+    <span class="text-green-500">{{ counts.positive }}</span><span>/</span
     ><span class="text-zinc-100">{{ counts.neutral }}</span
     ><span>/</span>
     <span class="text-red-500">{{ counts.negative }}</span>

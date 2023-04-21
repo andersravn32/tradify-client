@@ -12,7 +12,7 @@
 </template>
 
 <style>
-#content {
+#layout-app #content {
   @apply pl-80 pt-[74px] pr-80;
 }
 </style>

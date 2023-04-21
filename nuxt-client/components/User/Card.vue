@@ -18,8 +18,8 @@ defineEmits(["close"]);
 
 // Use auth store
 const authStore = useAuthStore();
-const authStoreRefs = storeToRefs(authStore);
 const router = useRouter();
+const runtimeConfig = useRuntimeConfig();
 
 const user = ref({
   ...props.user,
@@ -27,12 +27,12 @@ const user = ref({
 
 if (!user.value.trades) {
   const { data, errors } = await fetch(
-    `https://prod.tradify.dk/user/${user.value.uuid}`,
+    `${runtimeConfig.backendUrl}/user/${user.value.uuid}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: authStoreRefs.accessToken.value,
+        Authorization: storeToRefs(authStore).accessToken.value,
       },
     }
   ).then((res) => res.json());
@@ -60,7 +60,7 @@ if (!user.value.trades) {
 
     <ul
       class="flex flex-col space-y-4"
-      v-if="authStoreRefs.user.value.uuid == user.uuid"
+      v-if="storeToRefs(authStore).user.value.uuid == user.uuid"
     >
       <li>
         <NuxtLink class="router-link" to="/"
@@ -92,7 +92,7 @@ if (!user.value.trades) {
     </ul>
     <ul
       class="flex flex-col space-y-4"
-      v-if="authStoreRefs.user.value.uuid != user.uuid"
+      v-if="storeToRefs(authStore).user.value.uuid != user.uuid"
     >
     <li>
         <NuxtLink class="router-link" @click="$emit('close')" :to="`/profile/${user.identifier}`"

@@ -4,6 +4,7 @@ import useAuthStore from "~/stores/AuthStore";
 
 const authStore = useAuthStore();
 const authStoreRefs = storeToRefs(authStore);
+const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps({
   user: {
@@ -29,7 +30,7 @@ const create = async () => {
   // Update loading state
   loading.value = true;
 
-  const { data, errors } = await fetch("https://prod.tradify.dk/trades", {
+  const { data, errors } = await fetch(`${runtimeConfig.backendUrl}/trades`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

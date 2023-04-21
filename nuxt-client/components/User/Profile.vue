@@ -8,6 +8,7 @@ import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 
 const authStore = useAuthStore();
+const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps({
   user: {
@@ -21,7 +22,7 @@ const user = ref({
 
 if (!user.value.trades) {
   const { data, errors } = await fetch(
-    `https://prod.tradify.dk/user/${user.value.uuid}`,
+    `${runtimeConfig.backendUrl}/user/${user.value.uuid}`,
     {
       method: "GET",
       headers: {

@@ -3,8 +3,7 @@ import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 
 const authStore = useAuthStore();
-const authStoreRefs = storeToRefs(authStore);
-
+const runtimeConfig = useRuntimeConfig();
 const results = ref([]);
 
 const selected = ref(null);
@@ -17,12 +16,12 @@ const search = async (e) => {
   }
 
   const { data, errors } = await fetch(
-    `https://prod.tradify.dk/users/${e.value}`,
+    `${runtimeConfig.backendUrl}/users/${e.value}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: authStoreRefs.accessToken.value,
+        Authorization: storeToRefs(authStore).accessToken.value,
       },
     }
   ).then((res) => res.json());
@@ -32,7 +31,7 @@ const search = async (e) => {
   }
 
   results.value = data.filter((user) => {
-    return user.uuid != authStoreRefs.user.value.uuid;
+    return user.uuid != storeToRefs(authStore).user.value.uuid;
   });
 };
 </script>

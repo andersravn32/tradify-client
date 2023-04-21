@@ -10,9 +10,10 @@ definePageMeta({
 
 const router = useRouter();
 const authStore = useAuthStore();
+const runtimeConfig = useRuntimeConfig();
 
 const { data, errors } = await fetch(
-  `https://prod.tradify.dk/users/${router.currentRoute.value.params.identifier}`,
+  `${runtimeConfig.backendUrl}/users/${router.currentRoute.value.params.identifier}`,
   {
     method: "GET",
     headers: {

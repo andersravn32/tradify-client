@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 const useAuthStore = defineStore("auth", () => {
   const accessToken = useCookie("accessToken");
   const refreshToken = useCookie("refreshToken");
+  const runtimeConfig = useRuntimeConfig();
+
   const user = ref(null);
 
   const clear = () => {
@@ -16,7 +18,7 @@ const useAuthStore = defineStore("auth", () => {
   const refresh = async () => {
     // Request refreshed data
     const { data, errors } = await fetch(
-      "https://prod.tradify.dk/auth/refresh",
+      `${runtimeConfig.backendUrl}/auth/refresh`,
       {
         method: "POST",
         headers: {
@@ -43,7 +45,7 @@ const useAuthStore = defineStore("auth", () => {
 
   const signout = async () => {
     const { data, errors } = await fetch(
-      "https://prod.tradify.dk/auth/signout",
+      `${runtimeConfig.backendUrl}/auth/signout`,
       {
         method: "POST",
         headers: {
@@ -71,7 +73,7 @@ const useAuthStore = defineStore("auth", () => {
     }
 
     const { data, errors } = await fetch(
-      "https://prod.tradify.dk/auth/provider/email/signin",
+      `${runtimeConfig.backendUrl}/auth/provider/email/signin`,
       {
         method: "POST",
         headers: {

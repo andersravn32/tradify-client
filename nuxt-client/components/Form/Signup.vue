@@ -6,6 +6,8 @@ const authStore = await useAuthStore();
 const authStoreRefs = storeToRefs(authStore);
 const router = useRouter();
 
+const runtimeConfig = useRuntimeConfig();
+
 // Loading state
 const loading = ref(false);
 
@@ -27,7 +29,7 @@ const signup = async () => {
   loading.value = true;
 
   const { data, errors } = await fetch(
-    "https://prod.tradify.dk/auth/provider/email/signup",
+    `${runtimeConfig.backendUrl}/auth/provider/email/signup`,
     {
       method: "POST",
       headers: {

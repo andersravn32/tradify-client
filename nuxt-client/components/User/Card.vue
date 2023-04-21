@@ -57,7 +57,7 @@ if (!user.value.trades) {
     <TradeCounter
       v-if="user.trades"
       :trades="user.trades"
-      :userId="user.uuid"
+      :uuid="user.uuid"
     />
 
     <ul

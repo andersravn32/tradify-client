@@ -4,6 +4,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  position: {
+    type: String,
+    default: "left",
+  },
 });
 
 const open = ref(props.open);
@@ -14,7 +18,12 @@ const open = ref(props.open);
     <Button @click="open = !open" class="dropdown-button-icon" type="icon">
       <slot name="icon" />
     </Button>
-    <div v-if="open" class="dropdown-button-content" @mouseleave="open = false">
+    <div
+      v-if="open"
+      class="dropdown-button-content"
+      :class="`button-position-${position}`"
+      @mouseleave="open = false"
+    >
       <slot name="content" />
     </div>
   </div>
@@ -26,6 +35,19 @@ const open = ref(props.open);
 }
 
 .dropdown-button-content {
-  @apply absolute bg-zinc-800 p-4 rounded left-full top-0 ml-2 shadow-lg;
+  @apply absolute bg-zinc-800 p-2 rounded shadow-lg z-10;
+}
+
+.button-position-left {
+    @apply left-full top-0 ml-2;
+}
+.button-position-right {
+    @apply right-full top-0 mr-2;
+}
+.button-position-top {
+    @apply bottom-full mb-2;
+}
+.button-position-bottom {
+    @apply top-full mt-2;
 }
 </style>

@@ -62,7 +62,7 @@ props.trades.forEach((trade) => {
     <span class="text-red-500">{{ counts.negative }}</span>
   </div>
 
-  <div v-if="size == 'sm'" class="text-zinc-400">
+  <div v-if="size == 'sm'" class="text-zinc-400 grid grid-cols-5 place-items-center font-semibold">
     <span class="text-green-500">{{ counts.positive }}</span><span>/</span
     ><span class="text-zinc-100">{{ counts.neutral }}</span
     ><span>/</span>

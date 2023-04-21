@@ -13,6 +13,6 @@
 
 <style>
 #layout-app #content {
-  @apply pl-80 pt-[74px] pr-80;
+  @apply pl-80 pt-[74px];
 }
 </style>

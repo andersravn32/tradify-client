@@ -43,7 +43,7 @@ import {
 
 <style>
 #sidenav {
-  @apply fixed top-0 bottom-0 left-0 w-64 p-4 border-r-2 border-zinc-800 flex flex-col space-y-8 z-10;
+  @apply fixed top-0 bottom-0 left-0 w-80 p-4 border-r-2 border-zinc-800 flex flex-col space-y-8 z-10;
 }
 
 #sidenav .router-link {

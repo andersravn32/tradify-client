@@ -1,4 +1,5 @@
 <script setup>
+import { BellIcon } from "@heroicons/vue/24/outline";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 
@@ -20,6 +21,10 @@ const router = useRouter();
     <ul class="flex items-center space-x-8">
       <li><Button>Opret handel</Button></li>
       <li>
+        <Button type="icon"><BellIcon class="w-6 h-6" /></Button>
+      </li>
+      <li class="text-zinc-700">|</li>
+      <li>
         <UserSmall :user="authStoreRefs.user.value" />
       </li>
     </ul>
@@ -28,7 +33,7 @@ const router = useRouter();
 
 <style>
 #topnav {
-  @apply fixed top-0 right-0 left-64 p-4 border-b-2 border-zinc-800 flex justify-between items-center text-zinc-100 z-10;
+  @apply fixed top-0 right-0 left-80 p-4 border-b-2 border-zinc-800 flex justify-between items-center text-zinc-100 z-10;
 }
 
 #topnav .user {

@@ -13,6 +13,6 @@
 
 <style>
 #content {
-  @apply pl-64 pt-[74px];
+  @apply pl-80 pt-[74px] pr-80;
 }
 </style>

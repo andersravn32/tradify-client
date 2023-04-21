@@ -17,5 +17,9 @@ export default defineNuxtRouteMiddleware(async () => {
     }
   }
 
+  if (!storeToRefs(authStore).user.value.profile.firstName) {
+    return "/onboarding";
+  }
+
   return true;
 });

@@ -8,7 +8,7 @@ const props = defineProps({
     type: String,
     default: "md",
   },
-  userId: {
+  uuid: {
     type: String,
     required: true,
   },
@@ -20,35 +20,7 @@ const counts = ref({
   negative: 0,
 });
 
-props.trades.forEach((trade) => {
-  if (!trade.completed) {
-    return;
-  }
-
-  if (trade.to.uuid == props.userId) {
-    if (trade.to.rating.value == -1) {
-      counts.value.negative++;
-    }
-    if (trade.to.rating.value == 0) {
-      counts.value.neutral++;
-    }
-    if (trade.to.rating.value == 1) {
-      counts.value.positive++;
-    }
-  }
-
-  if (trade.from.uuid == props.userId) {
-    if (trade.from.rating.value == -1) {
-      counts.value.negative++;
-    }
-    if (trade.from.rating.value == 0) {
-      counts.value.neutral++;
-    }
-    if (trade.from.rating.value == 1) {
-      counts.value.positive++;
-    }
-  }
-});
+// TODO: Rewrite trade count logic
 </script>
 
 <template>
@@ -62,9 +34,12 @@ props.trades.forEach((trade) => {
     <span class="text-red-500">{{ counts.negative }}</span>
   </div>
 
-  <div v-if="size == 'sm'" class="text-zinc-400 grid grid-cols-5 place-items-center font-semibold">
-    <span class="text-green-500">{{ counts.positive }}</span><span>/</span
-    ><span class="text-zinc-100">{{ counts.neutral }}</span
+  <div
+    v-if="size == 'sm'"
+    class="text-zinc-400 grid grid-cols-5 place-items-center font-semibold"
+  >
+    <span class="text-green-500">{{ counts.positive }}</span
+    ><span>/</span><span class="text-zinc-100">{{ counts.neutral }}</span
     ><span>/</span>
     <span class="text-red-500">{{ counts.negative }}</span>
   </div>

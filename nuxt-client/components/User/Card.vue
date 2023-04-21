@@ -95,7 +95,7 @@ if (!user.value.trades) {
       v-if="authStoreRefs.user.value.uuid != user.uuid"
     >
     <li>
-        <NuxtLink class="router-link" to="/"
+        <NuxtLink class="router-link" @click="$emit('close')" :to="`/profile/${user.identifier}`"
           ><UserIcon class="h-6 w-6" /><span
             >Besøg profil</span
           ></NuxtLink

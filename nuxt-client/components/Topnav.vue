@@ -51,4 +51,8 @@ const router = useRouter();
 #topnav .user .user-details {
   @apply text-right;
 }
+
+#topnav .user .user-details span:nth-of-type(1) {
+  @apply flex-row-reverse ml-2;
+}
 </style>

@@ -1,4 +1,5 @@
 <script setup>
+import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 defineProps({
   user: {
     type: Object,
@@ -18,8 +19,9 @@ const handleClick = (e) => {
   <div class="user" @click="handleClick">
     <UserAvatar size="sm" :url="user.profile.avatar" />
     <div class="user-details">
-      <span class="text-sm font-semibold text-zinc-50">
-        {{ user.profile.firstName }}
+      <span class="text-sm font-semibold text-zinc-50 flex items-center space-x-2">
+        <span>{{ user.profile.firstName }}</span><CheckBadgeIcon v-if="user.verified" class="h-5 w-5 text-sky-500"
+      />
       </span>
       <span class="text-xs text-zinc-400"> @{{ user.identifier }} </span>
     </div>

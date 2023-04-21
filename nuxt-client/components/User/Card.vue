@@ -4,6 +4,7 @@ import {
   QuestionMarkCircleIcon,
   UserIcon,
 } from "@heroicons/vue/24/outline";
+import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 
@@ -36,7 +37,7 @@ if (!user.value.trades) {
       },
     }
   ).then((res) => res.json());
-    console.log(data,errors)
+  console.log(data, errors);
   user.value = data;
 }
 </script>
@@ -46,9 +47,10 @@ if (!user.value.trades) {
   <div class="user-card">
     <UserAvatar class="mx-auto" size="xl" :url="user.profile.avatar" />
     <div class="flex flex-col items-center">
-      <span class="font-semibold text-lg text-zinc-50">{{
-        user.profile.firstName
-      }}</span>
+      <span class="font-semibold text-lg text-zinc-50 flex items-center space-x-2"
+        ><span>{{ user.profile.firstName }}</span>
+        <CheckBadgeIcon v-if="user.verified" class="h-6 w-6 text-sky-500"
+      /></span>
       <span class="text-sm text-zinc-400 mb-2">@{{ user.identifier }}</span>
       <UserRole :role="user.role" />
     </div>
@@ -62,11 +64,6 @@ if (!user.value.trades) {
       class="flex flex-col space-y-4"
       v-if="storeToRefs(authStore).user.value.uuid == user.uuid"
     >
-      <li>
-        <NuxtLink class="router-link" to="/"
-          ><UserIcon class="h-6 w-6" /><span>Rediger profil</span></NuxtLink
-        >
-      </li>
       <li>
         <NuxtLink class="router-link" to="/"
           ><QuestionMarkCircleIcon class="h-6 w-6" /><span
@@ -94,11 +91,12 @@ if (!user.value.trades) {
       class="flex flex-col space-y-4"
       v-if="storeToRefs(authStore).user.value.uuid != user.uuid"
     >
-    <li>
-        <NuxtLink class="router-link" @click="$emit('close')" :to="`/profile/${user.identifier}`"
-          ><UserIcon class="h-6 w-6" /><span
-            >Besøg profil</span
-          ></NuxtLink
+      <li>
+        <NuxtLink
+          class="router-link"
+          @click="$emit('close')"
+          :to="`/profile/${user.identifier}`"
+          ><UserIcon class="h-6 w-6" /><span>Besøg profil</span></NuxtLink
         >
       </li>
     </ul>

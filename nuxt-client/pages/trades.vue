@@ -39,8 +39,6 @@ const completedTrades = storeToRefs(authStore).user.value.trades.filter(
     );
   }
 );
-
-console.log(incomingTrades, ongoingTrades, completedTrades);
 </script>
 
 <template>

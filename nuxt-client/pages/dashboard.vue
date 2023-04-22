@@ -8,6 +8,5 @@ definePageMeta({
 
 <template>
   <section id="page-dashboard">
-    <FormTradeCreate />
   </section>
 </template>

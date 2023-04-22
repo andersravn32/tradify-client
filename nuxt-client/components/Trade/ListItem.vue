@@ -15,27 +15,13 @@ const props = defineProps({
     required: true,
   },
 });
-const runtimeConfig = useRuntimeConfig();
+
 const authStore = useAuthStore();
 const router = useRouter();
 const modal = useModal();
 const dataStore = useDataStore();
 
-const { data, errors } = await fetch(
-  `${runtimeConfig.public.backendUrl}/trade/${props.trade._id}`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: storeToRefs(authStore).accessToken.value,
-    },
-  }
-).then((res) => res.json());
-
-const trade = ref({
-  ...props.trade,
-  ...data,
-});
+const trade = await dataStore.loadTrade(props.trade._id)
 </script>
 
 <template>

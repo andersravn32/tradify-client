@@ -22,7 +22,6 @@ const dataStore = useDataStore();
       <Topnav />
     </div>
     <div id="extra">
-      <Sidebar />
     </div>
     <div id="content">
       <slot />
@@ -32,6 +31,6 @@ const dataStore = useDataStore();
 
 <style>
 #layout-app #content {
-  @apply pl-80 pt-[74px] pr-80;
+  @apply pl-80 pt-[74px];
 }
 </style>

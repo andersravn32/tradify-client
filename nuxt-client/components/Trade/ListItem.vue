@@ -41,7 +41,7 @@ const trade = ref({
 <template>
   <li class="trade-list-item">
     <span
-      class="font-bold text-zinc-50 text-sm cursor-pointer"
+      class="font-semibold flex flex-col cursor-pointer text-sm text-zinc-50"
       @click="router.push(`/trade/${trade._id}`)"
       >{{ trade.title }}</span
     >

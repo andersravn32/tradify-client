@@ -5,6 +5,8 @@ import useAuthStore from "~/stores/AuthStore";
 const authStore = useAuthStore();
 const authStoreRefs = storeToRefs(authStore);
 const runtimeConfig = useRuntimeConfig();
+const modal = useModal();
+const router = useRouter();
 
 const props = defineProps({
   user: {
@@ -30,17 +32,27 @@ const create = async () => {
   // Update loading state
   loading.value = true;
 
-  const { data, errors } = await fetch(`${runtimeConfig.public.backendUrl}/trades`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: authStoreRefs.accessToken.value,
-    },
-    body: JSON.stringify(trade.value),
-  }).then((res) => res.json());
+  const { data, errors } = await fetch(
+    `${runtimeConfig.public.backendUrl}/trades`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authStoreRefs.accessToken.value,
+      },
+      body: JSON.stringify(trade.value),
+    }
+  ).then((res) => res.json());
 
-  console.log(data, errors);
   loading.value = false;
+
+  if (!data || errors) {
+    return;
+  }
+
+  modal.value.currentModal = "";
+  modal.value.show = false;
+  return router.push(`/trade/${data._id}`);
 };
 </script>
 
@@ -75,7 +87,14 @@ const create = async () => {
       >
     </p>
     <div class="flex items-center justify-between">
-      <Button @click.prevent type="tertiary">Annuller</Button>
+      <Button
+        @click.prevent="
+          modal.currentModal = '';
+          modal.show = false;
+        "
+        type="tertiary"
+        >Annuller</Button
+      >
       <Button :loading="loading">Opret handel</Button>
     </div>
   </form>

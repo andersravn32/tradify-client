@@ -4,11 +4,25 @@ import useAuthStore from "~/stores/AuthStore";
 
 const authStore = useAuthStore();
 const runtimeConfig = useRuntimeConfig();
-const results = ref([]);
 
+function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}
+
+const results = ref([]);
 const selected = ref(null);
 
 defineEmits(["done", "reset"]);
+
+const handleInput = debounce((e) => {
+  search(e);
+})
 
 const search = async (e) => {
   if (!e.value) {
@@ -42,7 +56,7 @@ const search = async (e) => {
       <Input
         type="text"
         placeholder="Indtast brugernavn eller e-mail"
-        @input="search"
+        @input="handleInput"
       />
       <ul v-if="results.length" class="flex flex-col space-y-2">
         <li v-for="user in results" class="flex items-center justify-between">

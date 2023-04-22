@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="modal" :class="{'modal-hidden': id != modal.currentModal}">
+  <div v-if="id == modal.currentModal" class="modal">
     <slot />
   </div>
 </template>
@@ -20,11 +20,7 @@ const props = defineProps({
     @apply bg-zinc-800 rounded shadow-lg;
 }
 
-.modal-hidden {
-    @apply hidden;
-}
-
-.modal .input input, #form-trade-create textarea {
+.modal .input input, #form-trade-create textarea, #form-trade-rate textarea, .modal select {
   @apply bg-zinc-900;
 }
 

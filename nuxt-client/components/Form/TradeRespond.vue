@@ -17,7 +17,7 @@ const dataStore = useDataStore();
 const router = useRouter();
 
 const accept = async () => {
-  const { message } = await fetch(
+  const { data, errors } = await fetch(
     `${runtimeConfig.public.backendUrl}/trade/${props.trade._id}/accept`,
     {
       method: "PUT",
@@ -28,13 +28,13 @@ const accept = async () => {
     }
   ).then((res) => res.json());
 
-  if (!message){
+  if (!data || errors){
     return;
   }
 
   modal.value.currentModal = '';
   modal.value.show = false;
-  storeToRefs(dataStore).trade.value = null;
+  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(props.trade._id, true);
 
   if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)){
     router.push(`/trade/${props.trade._id}`)
@@ -42,7 +42,7 @@ const accept = async () => {
 };
 
 const reject = async () => {
-  const { message } = await fetch(
+  const { data, errors } = await fetch(
     `${runtimeConfig.public.backendUrl}/trade/${props.trade._id}/reject`,
     {
       method: "PUT",
@@ -53,13 +53,13 @@ const reject = async () => {
     }
   ).then((res) => res.json());
 
-  if (!message){
+  if (!data || errors){
     return;
   }
 
   modal.value.currentModal = '';
   modal.value.show = false;
-  storeToRefs(dataStore).trade.value = null;
+  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(props.trade._id, true);
 
   if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)){
     router.push(`/trade/${props.trade._id}`)

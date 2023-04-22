@@ -65,7 +65,7 @@ const rate = async () => {
 
   modal.value.currentModal = "";
   modal.value.show = false;
-  storeToRefs(dataStore).trade.value = null;
+  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(props.trade._id, true);
 
   if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)) {
     router.push(`/trade/${props.trade._id}`);

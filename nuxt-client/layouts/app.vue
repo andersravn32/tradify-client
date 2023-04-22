@@ -1,6 +1,10 @@
 <template>
   <div id="layout-app">
-    <div id="modals"></div>
+    <ModalOverlay>
+      <Modal id="modal-form-trade-create">
+        <FormTradeCreate />
+      </Modal>
+    </ModalOverlay>
     <div id="navigation">
       <Sidenav />
       <Topnav />

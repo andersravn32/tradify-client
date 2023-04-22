@@ -21,6 +21,7 @@ defineEmits(["close"]);
 const authStore = useAuthStore();
 const router = useRouter();
 const runtimeConfig = useRuntimeConfig();
+const modal = useModal();
 
 const user = ref({
   ...props.user,
@@ -37,28 +38,28 @@ if (!user.value.trades) {
       },
     }
   ).then((res) => res.json());
-  console.log(data, errors);
   user.value = data;
 }
 </script>
 
 <template>
-  <Overlay @click="$emit('close')" />
+  <Overlay @click="(e) => $emit('close', e)" />
   <div class="user-card">
     <UserAvatar class="mx-auto" size="xl" :url="user.profile.avatar" />
     <div class="flex flex-col items-center">
-      <span class="font-semibold text-lg text-zinc-50 flex items-center space-x-2"
+      <span
+        class="font-semibold text-lg text-zinc-50 flex items-center space-x-2"
         ><span>{{ user.profile.firstName }}</span>
         <CheckBadgeIcon v-if="user.verified" class="h-6 w-6 text-sky-500"
       /></span>
-      <span class="text-sm text-zinc-400 mb-2">@{{ user.identifier }}</span>
-      <UserRole :role="user.role" />
+      <span class="text-sm text-zinc-400">@{{ user.identifier }}</span>
+      <UserRole
+        v-if="user.role.permissionLevel >= 3"
+        class="mt-2"
+        :role="user.role"
+      />
     </div>
-    <TradeCounter
-      v-if="user.trades"
-      :trades="user.trades"
-      :uuid="user.uuid"
-    />
+    <TradeCounter v-if="user.trades" :trades="user.trades" :uuid="user.uuid" />
 
     <ul
       class="flex flex-col space-y-4"
@@ -94,7 +95,13 @@ if (!user.value.trades) {
       <li>
         <NuxtLink
           class="router-link"
-          @click="$emit('close')"
+          @click="
+            (e) => {
+              $emit('close', e);
+              modal.currentModal = '';
+              modal.show = false;
+            }
+          "
           :to="`/profile/${user.identifier}`"
           ><UserIcon class="h-6 w-6" /><span>Besøg profil</span></NuxtLink
         >

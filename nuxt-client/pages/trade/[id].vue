@@ -12,11 +12,11 @@ definePageMeta({
 const router = useRouter();
 const dataStore = useDataStore();
 
-const trade = await dataStore.loadTrade(router.currentRoute.value.params.id, true);
+storeToRefs(dataStore).trade.value = await dataStore.loadTrade(router.currentRoute.value.params.id, true);
 </script>
 
 <template>
   <section id="page-trade">
-    <TradeHeader :trade="trade" />
+    <TradeHeader :trade="storeToRefs(dataStore).trade.value" />
   </section>
 </template>

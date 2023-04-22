@@ -53,6 +53,10 @@ const router = useRouter();
 }
 
 #topnav .user .user-details span:nth-of-type(1) {
-  @apply flex-row-reverse ml-2;
+  @apply flex-row-reverse space-x-0;
+}
+
+#topnav .user .user-details span:nth-of-type(1) span {
+  @apply ml-2;
 }
 </style>

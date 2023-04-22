@@ -7,6 +7,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
+import useDataStore from "~/stores/DataStore";
 
 const props = defineProps({
   trade: {
@@ -17,6 +18,8 @@ const props = defineProps({
 const runtimeConfig = useRuntimeConfig();
 const authStore = useAuthStore();
 const router = useRouter();
+const modal = useModal();
+const dataStore = useDataStore();
 
 const { data, errors } = await fetch(
   `${runtimeConfig.public.backendUrl}/trade/${props.trade._id}`,
@@ -37,7 +40,11 @@ const trade = ref({
 
 <template>
   <li class="trade-list-item">
-    <span class="font-bold text-zinc-50 text-sm cursor-pointer" @click="router.push(`/trade/${trade._id}`)">{{ trade.title }}</span>
+    <span
+      class="font-bold text-zinc-50 text-sm cursor-pointer"
+      @click="router.push(`/trade/${trade._id}`)"
+      >{{ trade.title }}</span
+    >
     <span class="font-bold text-zinc-50 text-sm">{{
       trade.category ? trade.category : "-"
     }}</span>
@@ -63,7 +70,14 @@ const trade = ref({
                 !trade.to.confirmed
               "
             >
-              <span class="router-link">
+              <span
+                class="router-link"
+                @click="
+                  storeToRefs(dataStore).trade.value = trade;
+                  modal.currentModal = 'modal-form-trade-respond';
+                  modal.show = true;
+                "
+              >
                 <ArrowUturnLeftIcon class="h-4 w-4" />
                 <span>Besvar handel</span>
               </span>
@@ -71,14 +85,23 @@ const trade = ref({
             <li
               v-if="
                 (trade.from.uuid == storeToRefs(authStore).user.value.uuid &&
-                  trade.from.confirmed && trade.to.confirmed && 
+                  trade.from.confirmed &&
+                  trade.to.confirmed &&
                   !trade.from.rating) ||
                 (trade.to.uuid == storeToRefs(authStore).user.value.uuid &&
-                  trade.to.confirmed && trade.from.confirmed &&
+                  trade.to.confirmed &&
+                  trade.from.confirmed &&
                   !trade.to.rating)
               "
             >
-              <span class="router-link">
+              <span
+                class="router-link"
+                @click="
+                  storeToRefs(dataStore).trade.value = trade;
+                  modal.currentModal = 'modal-form-trade-rate';
+                  modal.show = true;
+                "
+              >
                 <ChatBubbleBottomCenterIcon class="h-4 w-4" />
                 <span>Bedøm handel</span>
               </span>

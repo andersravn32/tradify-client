@@ -2,9 +2,12 @@
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
+import useDataStore from "~/stores/DataStore";
 
 const router = useRouter();
 const authStore = useAuthStore();
+const dataStore = useDataStore();
+const modal = useModal();
 
 defineProps({
   trade: {
@@ -12,7 +15,6 @@ defineProps({
     required: true,
   },
 });
-
 </script>
 
 <template>
@@ -39,9 +41,7 @@ defineProps({
       <div class="trade-header-details">
         <div class="flex flex-col space-y-2 p-4">
           <span class="text-xs uppercase text-zinc-400">Status:</span>
-          <span
-            v-if="trade.from.confirmed"
-            class="text-sm text-green-500"
+          <span v-if="trade.from.confirmed" class="text-sm text-green-500"
             >Bekræftet</span
           >
           <span
@@ -77,6 +77,7 @@ defineProps({
             >
               <Button
                 v-if="trade.from.uuid == storeToRefs(authStore).user.value.uuid"
+                @click="storeToRefs(dataStore).trade.value = trade; modal.currentModal = 'modal-form-trade-rate'; modal.show = true;"
                 size="sm"
                 >Bedøm</Button
               >
@@ -124,16 +125,34 @@ defineProps({
         <span class="text-sm text-zinc-400">@{{ trade.to.identifier }}</span>
       </div>
       <div class="trade-header-details">
-        <div class="flex flex-col space-y-2 p-4">
+        <div class="flex flex-col space-y-2 p-4 items-start">
           <span class="text-xs uppercase text-zinc-400">Status:</span>
-          <span
-            v-if="trade.to.confirmed"
-            class="text-sm text-green-500"
+          <span v-if="trade.to.confirmed" class="text-sm text-green-500"
             >Bekræftet</span
           >
-          <span v-if="!trade.to.confirmed" class="text-sm text-zinc-400 italic"
-            >Afventer</span
-          >
+          <span class="flex items-center justify-between w-full">
+            <span
+              v-if="
+                trade.to.uuid != storeToRefs(authStore).user.value.uuid &&
+                !trade.to.confirmed
+              "
+              class="text-sm text-zinc-400 italic"
+              >Afventer</span
+            >
+            <Button
+              size="sm"
+              v-if="
+                trade.to.uuid == storeToRefs(authStore).user.value.uuid &&
+                !trade.to.confirmed
+              "
+              @click="
+                storeToRefs(dataStore).trade.value = trade;
+                modal.currentModal = 'modal-form-trade-respond';
+                modal.show = true;
+              "
+              >Besvar</Button
+            >
+          </span>
         </div>
         <div class="col-span-2 grid grid-cols-2 p-4">
           <div class="flex flex-col space-y-2">
@@ -162,6 +181,7 @@ defineProps({
             >
               <Button
                 v-if="trade.to.uuid == storeToRefs(authStore).user.value.uuid"
+                @click="storeToRefs(dataStore).trade.value = trade; modal.currentModal = 'modal-form-trade-rate'; modal.show = true;"
                 size="sm"
                 >Bedøm</Button
               >

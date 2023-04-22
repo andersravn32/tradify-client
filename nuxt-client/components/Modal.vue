@@ -23,4 +23,12 @@ const props = defineProps({
 .modal-hidden {
     @apply hidden;
 }
+
+.modal .input input, #form-trade-create textarea {
+  @apply bg-zinc-900;
+}
+
+.modal .user{
+  @apply bg-zinc-900 p-2 rounded;
+}
 </style>

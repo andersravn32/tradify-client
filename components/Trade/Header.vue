@@ -116,7 +116,7 @@ defineProps({
         @click="router.push(`/profile/${trade.to.identifier}`)"
         :class="{ 'opacity-50': !trade.to.confirmed }"
       >
-        <UserAvatar size="xl" :url="trade.from.profile.avatar" />
+        <UserAvatar size="xl" :url="trade.to.profile.avatar" />
         <span
           class="font-semibold text-2xl text-zinc-50 flex items-center space-x-2"
           ><span>{{ trade.to.profile.firstName }}</span>

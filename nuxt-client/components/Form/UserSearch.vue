@@ -58,8 +58,8 @@ const search = async (e) => {
         placeholder="Indtast brugernavn eller e-mail"
         @input="handleInput"
       />
-      <ul v-if="results.length" class="flex flex-col space-y-2 odd:bg-zinc-900/25">
-        <li v-for="user in results" class="flex items-center justify-between">
+      <ul v-if="results.length" class="flex flex-col space-y-2">
+        <li v-for="user in results" class="flex items-center justify-between p-2 rounded odd:bg-zinc-900/25">
           <UserSmall :user="user" />
           <Button
             type="primary"
@@ -92,6 +92,6 @@ const search = async (e) => {
 
 <style>
 #form-search .user{
-  @apply bg-transparent p-2;
+  @apply bg-transparent p-0;
 }
 </style>

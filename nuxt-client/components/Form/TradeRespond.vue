@@ -1,6 +1,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
+import useDataStore from "~/stores/DataStore";
 
 const props = defineProps({
   trade: {
@@ -11,9 +12,12 @@ const props = defineProps({
 
 const authStore = useAuthStore();
 const runtimeConfig = useRuntimeConfig();
+const modal = useModal();
+const dataStore = useDataStore();
+const router = useRouter();
 
 const accept = async () => {
-  const { data, errors } = await fetch(
+  const { message } = await fetch(
     `${runtimeConfig.public.backendUrl}/trade/${props.trade._id}/accept`,
     {
       method: "PUT",
@@ -24,11 +28,21 @@ const accept = async () => {
     }
   ).then((res) => res.json());
 
-  console.log(data, errors);
+  if (!message){
+    return;
+  }
+
+  modal.value.currentModal = '';
+  modal.value.show = false;
+  storeToRefs(dataStore).trade.value = null;
+
+  if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)){
+    router.push(`/trade/${props.trade._id}`)
+  }
 };
 
 const reject = async () => {
-  const { data, errors } = await fetch(
+  const { message } = await fetch(
     `${runtimeConfig.public.backendUrl}/trade/${props.trade._id}/reject`,
     {
       method: "PUT",
@@ -39,7 +53,17 @@ const reject = async () => {
     }
   ).then((res) => res.json());
 
-  console.log(data, errors);
+  if (!message){
+    return;
+  }
+
+  modal.value.currentModal = '';
+  modal.value.show = false;
+  storeToRefs(dataStore).trade.value = null;
+
+  if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)){
+    router.push(`/trade/${props.trade._id}`)
+  }
 };
 </script>
 

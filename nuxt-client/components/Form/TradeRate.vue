@@ -1,6 +1,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
+import useDataStore from "~/stores/DataStore";
 
 const props = defineProps({
   trade: {
@@ -11,10 +12,13 @@ const props = defineProps({
 
 const runtimeConfig = useRuntimeConfig();
 const authStore = useAuthStore();
+const modal = useModal();
+const dataStore = useDataStore();
+const router = useRouter();
 
 const rating = ref({
   value: "",
-  message: null,
+  message: "",
 });
 
 const rate = async () => {
@@ -43,7 +47,17 @@ const rate = async () => {
     }
   ).then((res) => res.json());
 
-  console.log(data, errors);
+  if (!data) {
+    return;
+  }
+
+  modal.value.currentModal = "";
+  modal.value.show = false;
+  storeToRefs(dataStore).trade.value = null;
+
+  if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)) {
+    router.push(`/trade/${props.trade._id}`);
+  }
 };
 </script>
 
@@ -75,7 +89,14 @@ const rate = async () => {
       ikke kan redigeres og/eller slettes såfremt den er afgivet.
     </p>
     <div class="w-full flex items-center justify-between">
-      <Button @click.prevent type="tertiary">Annuller</Button>
+      <Button
+        @click.prevent="
+          modal.currentModal = '';
+          modal.show = false;
+        "
+        type="tertiary"
+        >Annuller</Button
+      >
       <Button>Bedøm</Button>
     </div>
   </form>

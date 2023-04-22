@@ -1,5 +1,6 @@
 <script setup>
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
+import useDataStore from "~/stores/DataStore";
 defineProps({
   user: {
     type: Object,
@@ -7,6 +8,7 @@ defineProps({
   },
 });
 
+const modal = useModal();
 const showUserCard = ref(false);
 const handleClick = (e) => {
   if (e.target.className != "overlay") {
@@ -25,7 +27,7 @@ const handleClick = (e) => {
       </span>
       <span class="text-xs text-zinc-400"> @{{ user.identifier }} </span>
     </div>
-    <UserCard v-if="showUserCard" @close="showUserCard = false" :user="user" />
+    <UserCard v-if="showUserCard" @close="showUserCard = false; modal.currentModal = ''; modal.show = false;" :user="user" />
   </div>
 </template>
 

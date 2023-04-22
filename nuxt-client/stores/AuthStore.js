@@ -98,7 +98,47 @@ const useAuthStore = defineStore("auth", () => {
     return { data, errors };
   };
 
-  return { accessToken, refreshToken, user, clear, refresh, signin, signout };
+  const signup = async (identifier, email, password) => {
+    if (!identifier || !email || !password) {
+      return;
+    }
+
+    const { data, errors } = await fetch(
+      `${runtimeConfig.public.backendUrl}/auth/provider/email/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier, email, password }),
+      }
+    ).then((res) => res.json());
+
+    // If errors are present, return errors before setting state
+    if (errors) {
+      clear();
+      return { data, errors };
+    }
+
+    // Set response data
+    accessToken.value = data.accessToken;
+    refreshToken.value = data.refreshToken;
+    user.value = data.user;
+
+    // Return data and errors
+    return { data, errors };
+  };
+
+  return {
+    accessToken,
+    refreshToken,
+    user,
+    clear,
+    refresh,
+    signin,
+    signup,
+    signout,
+  };
 });
 
 export default useAuthStore;

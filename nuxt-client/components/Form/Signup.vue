@@ -28,16 +28,12 @@ const signup = async () => {
   // Update loading state
   loading.value = true;
 
-  const { data, errors } = await fetch(
-    `${runtimeConfig.public.backendUrl}/auth/provider/email/signup`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body.value),
-    }
-  ).then((res) => res.json());
+  // Perform signup through authStore
+  const { data, errors } = await authStore.signup(
+    body.value.identifier,
+    body.value.email,
+    body.value.password
+  );
 
   // Update loading state
   loading.value = false;
@@ -46,17 +42,6 @@ const signup = async () => {
     // TODO: Error handling
     return;
   }
-
-  // Set accessToken cookie
-  const accessToken = useCookie("accessToken");
-  accessToken.value = data.accessToken;
-
-  // Set refreshToken cookie
-  const refreshToken = useCookie("refreshToken");
-  refreshToken.value = data.refreshToken;
-
-  // Set user object in store
-  authStoreRefs.user.value = data.user;
 
   // Redirect to dashboard
   return router.push("/onboarding");

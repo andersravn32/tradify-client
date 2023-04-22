@@ -6,6 +6,7 @@ import useAuthStore from "~/stores/AuthStore";
 // Use auth store
 const authStore = useAuthStore();
 const authStoreRefs = storeToRefs(authStore);
+const modal = useModal();
 
 // Use router
 const router = useRouter();
@@ -19,7 +20,7 @@ const router = useRouter();
       </li>
     </ul>
     <ul class="flex items-center space-x-8">
-      <li><Button>Opret handel</Button></li>
+      <li><Button @click="modal.show = true; modal.currentModal='modal-form-trade-create'">Opret handel</Button></li>
       <li>
         <Button type="icon"><BellIcon class="w-6 h-6" /></Button>
       </li>

@@ -42,11 +42,8 @@ const useDataStore = defineStore("data", () => {
       ...data,
       loaded: new Date() / 1000,
     });
-
-    return {
-      ...data,
-      loaded: new Date() / 1000,
-    };
+    
+    return trades.value[trades.value.length - 1]
   };
 
   const clear = () => {

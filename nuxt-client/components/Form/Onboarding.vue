@@ -41,7 +41,7 @@ const save = async () => {
       }),
     }
   ).then((res) => res.json());
-
+    
   // Update loading state
   loading.value = false;
 

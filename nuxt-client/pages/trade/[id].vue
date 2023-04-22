@@ -1,6 +1,7 @@
 <script setup>
-import { storeToRefs } from 'pinia';
-import useAuthStore from '~/stores/AuthStore';
+import { storeToRefs } from "pinia";
+import useAuthStore from "~/stores/AuthStore";
+import useDataStore from "~/stores/DataStore";
 
 definePageMeta({
   layout: "app",
@@ -8,23 +9,10 @@ definePageMeta({
   middleware: "auth",
 });
 
-const runtimeConfig = useRuntimeConfig();
-const authStore = useAuthStore();
 const router = useRouter();
-const modal = useModal();
+const dataStore = useDataStore();
 
-const { data, error } = await fetch(
-  `${runtimeConfig.public.backendUrl}/trade/${router.currentRoute.value.params.id}`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: storeToRefs(authStore).accessToken.value,
-    },
-  }
-).then((res) => res.json());
-
-const trade = ref(data);
+const trade = await dataStore.loadTrade(router.currentRoute.value.params.id, true);
 </script>
 
 <template>

@@ -16,12 +16,18 @@ const modal = useModal();
 const dataStore = useDataStore();
 const router = useRouter();
 
+const loading = ref(false);
+
 const rating = ref({
   value: "",
   message: "",
 });
 
 const rate = async () => {
+  if (loading.value){
+    return;
+  }
+
   if (rating.value.value == "") {
     return;
   }
@@ -29,6 +35,9 @@ const rate = async () => {
   if (rating.value.message.length <= 5 || rating.value.message.length >= 250) {
     return;
   }
+
+  // Update loading state
+  loading.value = true;
 
   const { data, errors } = await fetch(
     `${runtimeConfig.public.backendUrl}/trade/${props.trade._id}/rate`,
@@ -46,6 +55,9 @@ const rate = async () => {
       }),
     }
   ).then((res) => res.json());
+
+  // Update loading state
+  loading.value = false;
 
   if (!data) {
     return;
@@ -97,7 +109,7 @@ const rate = async () => {
         type="tertiary"
         >Annuller</Button
       >
-      <Button>Bedøm</Button>
+      <Button :loading="loading">Bedøm</Button>
     </div>
   </form>
 </template>

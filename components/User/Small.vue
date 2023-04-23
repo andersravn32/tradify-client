@@ -1,5 +1,9 @@
 <script setup>
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
+import { storeToRefs } from "pinia";
+import useDataStore from "~/stores/DataStore";
+
+const dataStore = useDataStore();
 
 defineProps({
   user: {
@@ -13,16 +17,26 @@ defineProps({
 });
 
 const showUserCard = ref(false);
+const notificationBuffer = ref([]);
 
 const displayUserCard = (e) => {
   if (!showUserCard.value && e.target.className != "overlay") {
     showUserCard.value = true;
+    notificationBuffer.value = storeToRefs(dataStore).notifications.value;
+    storeToRefs(dataStore).notifications.value = [];
   }
 };
 
 const hideUserCard = (e) => {
   if (showUserCard.value) {
     showUserCard.value = false;
+    notificationBuffer.value.forEach((notification) => {
+      dataStore.addNotification(
+        notification.type,
+        notification.data,
+        notification.timeout
+      );
+    });
   }
 };
 </script>
@@ -42,8 +56,15 @@ const hideUserCard = (e) => {
         <span
           class="text-sm font-semibold text-zinc-50 flex items-center space-x-2"
         >
+          <CheckBadgeIcon
+            v-if="user.verified && direction == 'rtl'"
+            class="h-5 w-5 text-sky-500"
+          />
           <span>{{ user.profile.firstName }}</span
-          ><CheckBadgeIcon v-if="user.verified" class="h-5 w-5 text-sky-500" />
+          ><CheckBadgeIcon
+            v-if="user.verified && direction == 'ltr'"
+            class="h-5 w-5 text-sky-500"
+          />
         </span>
         <span class="text-xs text-zinc-400"> @{{ user.identifier }} </span>
       </div>

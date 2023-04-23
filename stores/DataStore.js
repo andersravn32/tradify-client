@@ -31,6 +31,9 @@ const useDataStore = defineStore("data", () => {
     ).then((res) => res.json());
 
     if (errors) {
+      errors.forEach((error) => {
+        addNotification("error", error);
+      });
       return;
     }
 

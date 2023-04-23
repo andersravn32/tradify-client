@@ -1,8 +1,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
+import useDataStore from "~/stores/DataStore";
 
 const authStore = useAuthStore();
+const dataStore = useDataStore();
 const runtimeConfig = useRuntimeConfig();
 
 function debounce(func, timeout = 300) {
@@ -22,7 +24,7 @@ defineEmits(["done", "reset"]);
 
 const handleInput = debounce((e) => {
   search(e);
-})
+});
 
 const search = async (e) => {
   if (!e.value) {
@@ -39,6 +41,13 @@ const search = async (e) => {
       },
     }
   ).then((res) => res.json());
+
+  if (errors) {
+    errors.forEach((error) => {
+      dataStore.addNotification("error", error);
+    });
+    return;
+  }
 
   if (!data || !data.length) {
     return;
@@ -59,7 +68,10 @@ const search = async (e) => {
         @input="handleInput"
       />
       <ul v-if="results.length" class="flex flex-col space-y-2">
-        <li v-for="user in results" class="flex items-center justify-between p-2 rounded odd:bg-zinc-900/25">
+        <li
+          v-for="user in results"
+          class="flex items-center justify-between p-2 rounded odd:bg-zinc-900/25"
+        >
           <UserSmall :user="user" />
           <Button
             type="primary"
@@ -91,7 +103,7 @@ const search = async (e) => {
 </template>
 
 <style>
-#form-search .user{
+#form-search .user {
   @apply bg-transparent p-0;
 }
 </style>

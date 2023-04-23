@@ -7,6 +7,7 @@ import {
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
+import useDataStore from "~/stores/DataStore";
 
 const props = defineProps({
   user: {
@@ -19,6 +20,7 @@ defineEmits(["close"]);
 
 // Use auth store
 const authStore = useAuthStore();
+const dataStore = useDataStore();
 const router = useRouter();
 const runtimeConfig = useRuntimeConfig();
 const modal = useModal();
@@ -38,6 +40,13 @@ if (!user.value.trades) {
       },
     }
   ).then((res) => res.json());
+
+  if (errors) {
+    errors.forEach((error) => {
+      dataStore.addNotification("error", error);
+    });
+  }
+
   user.value = data;
 }
 </script>

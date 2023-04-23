@@ -1,9 +1,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
+import useDataStore from "~/stores/DataStore";
 
 const authStore = useAuthStore();
-const authStoreRefs = storeToRefs(authStore);
+const dataStore = useDataStore();
 const runtimeConfig = useRuntimeConfig();
 const modal = useModal();
 const router = useRouter();
@@ -38,7 +39,7 @@ const create = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: authStoreRefs.accessToken.value,
+        Authorization: storeToRefs(authStore).accessToken.value,
       },
       body: JSON.stringify(trade.value),
     }
@@ -46,12 +47,18 @@ const create = async () => {
 
   loading.value = false;
 
-  if (!data || errors) {
+  if (errors) {
+    errors.forEach((error) => {
+      dataStore.addNotification("error", error);
+    });
     return;
   }
 
   modal.value.currentModal = "";
   modal.value.show = false;
+  dataStore.addNotification("info", {
+    msg: `Du har nu oprettet en ny handel: ${data._id}`
+  });
   return router.push(`/trade/${data._id}`);
 };
 </script>

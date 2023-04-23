@@ -28,16 +28,30 @@ const accept = async () => {
     }
   ).then((res) => res.json());
 
-  if (!data || errors){
+  if (!data) {
     return;
   }
 
-  modal.value.currentModal = '';
-  modal.value.show = false;
-  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(props.trade._id, true);
+  if (errors) {
+    errors.forEach((error) => {
+      dataStore.addNotification("error", error);
+    });
+    return;
+  }
 
-  if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)){
-    router.push(`/trade/${props.trade._id}`)
+  modal.value.currentModal = "";
+  modal.value.show = false;
+  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(
+    props.trade._id,
+    true
+  );
+
+  dataStore.addNotification("info", {
+    msg: `Du har besvaret handel: ${props.trade._id}`,
+  });
+
+  if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)) {
+    router.push(`/trade/${props.trade._id}`);
   }
 };
 
@@ -53,16 +67,31 @@ const reject = async () => {
     }
   ).then((res) => res.json());
 
-  if (!data || errors){
+  if (!data) {
+    return;
+  }
+  
+  if (errors) {
+    errors.forEach((error) => {
+      dataStore.addNotification("error", error);
+    });
     return;
   }
 
-  modal.value.currentModal = '';
+  modal.value.currentModal = "";
   modal.value.show = false;
-  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(props.trade._id, true);
 
-  if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)){
-    router.push(`/trade/${props.trade._id}`)
+  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(
+    props.trade._id,
+    true
+  );
+
+  dataStore.addNotification("info", {
+    msg: `Du har besvaret handel: ${props.trade._id}`,
+  });
+
+  if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)) {
+    router.push(`/trade/${props.trade._id}`);
   }
 };
 </script>

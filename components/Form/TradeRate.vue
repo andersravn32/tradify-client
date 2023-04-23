@@ -59,13 +59,20 @@ const rate = async () => {
   // Update loading state
   loading.value = false;
 
-  if (!data) {
+  if (errors) {
+    errors.forEach((error) => {
+      dataStore.addNotification("error", error);
+    });
     return;
   }
 
   modal.value.currentModal = "";
   modal.value.show = false;
   storeToRefs(dataStore).trade.value = await dataStore.loadTrade(props.trade._id, true);
+
+  dataStore.addNotification("info", {
+    msg: `Du har afgivet din bedømmelse af handel: ${props.trade._id}`
+  });
 
   if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)) {
     router.push(`/trade/${props.trade._id}`);

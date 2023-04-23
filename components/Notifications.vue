@@ -20,6 +20,7 @@ const dataStore = useDataStore();
       v-for="(notification, index) in storeToRefs(dataStore).notifications
         .value"
       :class="`notification notification-${notification.type}`"
+      :key="index"
       @click="storeToRefs(dataStore).notifications.value.splice(index, 1)"
     >
       <ExclamationCircleIcon
@@ -54,11 +55,15 @@ const dataStore = useDataStore();
 
 <style>
 .notifications {
-  @apply space-y-4 fixed z-10 flex flex-col;
+  @apply space-y-4 fixed z-20 flex flex-col;
 }
 
 .notification {
   @apply w-full p-4 rounded-md border-2 flex items-center space-x-4 cursor-pointer shadow-lg;
+}
+
+.notification-content {
+    @apply flex flex-col max-w-xs
 }
 
 .notification-content h3{
@@ -74,7 +79,15 @@ const dataStore = useDataStore();
 }
 
 .notification-info {
-  @apply bg-indigo-500 text-indigo-900 border-indigo-900;
+  @apply bg-zinc-800 border-zinc-800 text-zinc-400;
+}
+
+.notification-info h3{
+    @apply text-zinc-50;
+}
+
+.notification-info p{
+    @apply text-zinc-400;
 }
 
 .notification-success {

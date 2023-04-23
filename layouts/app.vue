@@ -22,6 +22,7 @@ const dataStore = useDataStore();
       <Topnav />
     </div>
     <div id="extra">
+      <Notifications v-if="storeToRefs(dataStore).notifications.value.length"/>
     </div>
     <div id="content">
       <slot />

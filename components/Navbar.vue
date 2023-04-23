@@ -4,7 +4,7 @@ const router = useRouter();
 </script>
 
 <template>
-    <header>
+    <header id="navbar">
         <ul>
             <li>
                 <NuxtLink to="/">

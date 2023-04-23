@@ -3,6 +3,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
   InformationCircleIcon,
+  EnvelopeIcon,
 } from "@heroicons/vue/24/outline";
 import { storeToRefs } from "pinia";
 import useDataStore from "~/stores/DataStore";
@@ -32,6 +33,7 @@ const dataStore = useDataStore();
         class="h-8 w-8"
       />
       <CheckCircleIcon v-if="notification.type == 'success'" class="h-8 w-8" />
+      <EnvelopeIcon v-if="notification.type == 'message'" class="h-8 w-8" />
 
       <div class="notification-content">
         <h3 v-if="notification.type == 'error'">
@@ -46,6 +48,9 @@ const dataStore = useDataStore();
         </h3>
         <h3 v-if="notification.type == 'success'">
           {{ notification.data.title ? notification.data.title : "Success" }}
+        </h3>
+        <h3 v-if="notification.type == 'message'">
+          {{ notification.data.title ? notification.data.title : "Besked" }}
         </h3>
         <p>{{ notification.data.msg }}</p>
       </div>
@@ -63,31 +68,34 @@ const dataStore = useDataStore();
 }
 
 .notification-content {
-    @apply flex flex-col max-w-xs
+  @apply flex flex-col w-full max-w-full;
 }
 
-.notification-content h3{
-    @apply text-sm;
+.notification-content h3 {
+  @apply text-sm;
 }
 
-.notification-content p{
-    @apply text-xs;
+.notification-content p {
+  @apply text-xs;
 }
 
 .notification-error {
   @apply bg-red-500 text-red-900 border-red-900;
 }
 
-.notification-info {
+.notification-info,
+.notification-message {
   @apply bg-zinc-800 border-zinc-800 text-zinc-400;
 }
 
-.notification-info h3{
-    @apply text-zinc-50;
+.notification-info h3,
+.notification-message h3 {
+  @apply text-zinc-50;
 }
 
-.notification-info p{
-    @apply text-zinc-400;
+.notification-info p,
+.notification-message p {
+  @apply text-zinc-400;
 }
 
 .notification-success {

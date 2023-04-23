@@ -46,13 +46,14 @@ const save = async () => {
     
   // Update loading state
   loading.value = false;
-
   if (errors) {
     errors.forEach((error) => {
       dataStore.addNotification("error", error);
     });
     return;
   }
+  
+  storeToRefs(authStore).user.value.profile = data;
 
   return router.push("/dashboard");
 };

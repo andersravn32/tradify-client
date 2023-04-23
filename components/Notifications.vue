@@ -46,7 +46,7 @@ const dataStore = useDataStore();
         <h3 v-if="notification.type == 'success'">
           {{ notification.data.title ? notification.data.title : "Success" }}
         </h3>
-        <p class="text-sm">{{ notification.data.msg }}</p>
+        <p>{{ notification.data.msg }}</p>
       </div>
     </li>
   </ul>
@@ -59,6 +59,14 @@ const dataStore = useDataStore();
 
 .notification {
   @apply w-full p-4 rounded-md border-2 flex items-center space-x-4 cursor-pointer shadow-lg;
+}
+
+.notification-content h3{
+    @apply text-sm;
+}
+
+.notification-content p{
+    @apply text-xs;
 }
 
 .notification-error {

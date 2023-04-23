@@ -45,7 +45,7 @@ const trade = await dataStore.loadTrade(props.trade._id)
           <ul class="flex flex-col space-y-2 w-32">
             <li>
               <NuxtLink class="router-link" :to="`/trade/${trade._id}`"
-                ><ArrowRightIcon class="h-4 w-4" /><span
+                ><ArrowRightIcon class="h-5 w-5" /><span
                   >Gå til handel</span
                 ></NuxtLink
               >
@@ -64,7 +64,7 @@ const trade = await dataStore.loadTrade(props.trade._id)
                   modal.show = true;
                 "
               >
-                <ArrowUturnLeftIcon class="h-4 w-4" />
+                <ArrowUturnLeftIcon class="h-5 w-5" />
                 <span>Besvar handel</span>
               </span>
             </li>
@@ -88,7 +88,7 @@ const trade = await dataStore.loadTrade(props.trade._id)
                   modal.show = true;
                 "
               >
-                <ChatBubbleBottomCenterIcon class="h-4 w-4" />
+                <ChatBubbleBottomCenterIcon class="h-5 w-5" />
                 <span>Bedøm handel</span>
               </span>
             </li>

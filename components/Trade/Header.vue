@@ -41,7 +41,7 @@ defineProps({
       <div class="trade-header-details">
         <div class="flex flex-col space-y-2 p-4">
           <span class="text-xs uppercase text-zinc-400">Status:</span>
-          <span v-if="trade.from.confirmed" class="text-sm text-green-500"
+          <span v-if="trade.from.confirmed" class="text-sm text-zinc-50"
             >Bekræftet</span
           >
           <span
@@ -77,7 +77,11 @@ defineProps({
             >
               <Button
                 v-if="trade.from.uuid == storeToRefs(authStore).user.value.uuid"
-                @click="storeToRefs(dataStore).trade.value = trade; modal.currentModal = 'modal-form-trade-rate'; modal.show = true;"
+                @click="
+                  storeToRefs(dataStore).trade.value = trade;
+                  modal.currentModal = 'modal-form-trade-rate';
+                  modal.show = true;
+                "
                 size="sm"
                 >Bedøm</Button
               >
@@ -127,7 +131,7 @@ defineProps({
       <div class="trade-header-details">
         <div class="flex flex-col space-y-2 p-4 items-start">
           <span class="text-xs uppercase text-zinc-400">Status:</span>
-          <span v-if="trade.to.confirmed" class="text-sm text-green-500"
+          <span v-if="trade.to.confirmed" class="text-sm text-zinc-50"
             >Bekræftet</span
           >
           <span class="flex items-center justify-between w-full">
@@ -181,7 +185,11 @@ defineProps({
             >
               <Button
                 v-if="trade.to.uuid == storeToRefs(authStore).user.value.uuid"
-                @click="storeToRefs(dataStore).trade.value = trade; modal.currentModal = 'modal-form-trade-rate'; modal.show = true;"
+                @click="
+                  storeToRefs(dataStore).trade.value = trade;
+                  modal.currentModal = 'modal-form-trade-rate';
+                  modal.show = true;
+                "
                 size="sm"
                 >Bedøm</Button
               >

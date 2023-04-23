@@ -1,9 +1,10 @@
 <script setup>
+import useDataStore from "~/stores/DataStore";
 import useAuthStore from "../../stores/AuthStore";
 import { storeToRefs } from "pinia";
 
 const authStore = useAuthStore();
-const authStoreRefs = storeToRefs(authStore);
+const dataStore = useDataStore();
 const router = useRouter();
 
 // Loading state
@@ -34,7 +35,11 @@ const signin = async () => {
   loading.value = false;
 
   if (errors) {
-    // TODO: Error handling
+    errors.forEach((error) => {
+      dataStore.addNotification("error", {
+        msg: "Du har indtastet en forkert email eller password",
+      });
+    });
     return;
   }
 

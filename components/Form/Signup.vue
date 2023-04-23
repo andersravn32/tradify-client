@@ -1,12 +1,10 @@
 <script setup>
+import useDataStore from "~/stores/DataStore";
 import useAuthStore from "../../stores/AuthStore";
-import { storeToRefs } from "pinia";
 
-const authStore = await useAuthStore();
-const authStoreRefs = storeToRefs(authStore);
+const authStore = useAuthStore();
+const dataStore = useDataStore();
 const router = useRouter();
-
-const runtimeConfig = useRuntimeConfig();
 
 // Loading state
 const loading = ref(false);
@@ -39,7 +37,11 @@ const signup = async () => {
   loading.value = false;
 
   if (errors) {
-    // TODO: Error handling
+    errors.forEach((error) => {
+      dataStore.addNotification("error", {
+        msg: error,
+      });
+    });
     return;
   }
 

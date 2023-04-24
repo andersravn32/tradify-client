@@ -14,6 +14,10 @@ defineProps({
     type: String,
     default: "ltr",
   },
+  cardPosition: {
+    type: String,
+    default: "right"
+  }
 });
 
 const showUserCard = ref(false);
@@ -74,7 +78,7 @@ const hideUserCard = (e) => {
         :url="user.profile.avatar"
       />
     </div>
-    <UserCard v-if="showUserCard" @close="hideUserCard" :user="user" />
+    <UserCard v-if="showUserCard" @close="hideUserCard" :user="user" :position="cardPosition"/>
   </div>
 </template>
 

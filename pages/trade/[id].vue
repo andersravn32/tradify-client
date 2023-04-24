@@ -17,5 +17,13 @@ storeToRefs(dataStore).trade.value = await dataStore.loadTrade(router.currentRou
 <template>
   <section id="page-trade">
     <TradeHeader :trade="storeToRefs(dataStore).trade.value" />
+    <Tabs>
+      <Tab title="Information">
+        <TradeInformation :trade="storeToRefs(dataStore).trade.value"/>
+      </Tab>
+      <Tab title="Kommunikation">
+
+      </Tab>
+    </Tabs>
   </section>
 </template>

@@ -53,7 +53,7 @@ const trade = await tradeStore.load(props.trade._id)
             <li
               v-if="
                 trade.to.uuid == storeToRefs(authStore).user.value.uuid &&
-                !trade.to.confirmed
+                trade.to.confirmed === 0
               "
             >
               <span
@@ -71,12 +71,12 @@ const trade = await tradeStore.load(props.trade._id)
             <li
               v-if="
                 (trade.from.uuid == storeToRefs(authStore).user.value.uuid &&
-                  trade.from.confirmed &&
-                  trade.to.confirmed &&
+                  trade.from.confirmed === 1 &&
+                  trade.to.confirmed === 1 &&
                   !trade.from.rating) ||
                 (trade.to.uuid == storeToRefs(authStore).user.value.uuid &&
-                  trade.to.confirmed &&
-                  trade.from.confirmed &&
+                  trade.to.confirmed === 1 &&
+                  trade.from.confirmed === 1 &&
                   !trade.to.rating)
               "
             >

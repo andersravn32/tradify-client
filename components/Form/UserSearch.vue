@@ -2,10 +2,11 @@
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 import useNotificationStore from "~/stores/NotificationStore";
+import useUserStore from "~/stores/UserStore";
 
 const authStore = useAuthStore();
-const notificationStore = useNotificationStore()
-const runtimeConfig = useRuntimeConfig();
+const notificationStore = useNotificationStore();
+const userStore = useUserStore();
 
 function debounce(func, timeout = 300) {
   let timer;
@@ -31,16 +32,7 @@ const search = async (e) => {
     return;
   }
 
-  const { data, errors } = await fetch(
-    `${runtimeConfig.public.backendUrl}/users/${e.value}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: storeToRefs(authStore).accessToken.value,
-      },
-    }
-  ).then((res) => res.json());
+  const { data, errors } = await userStore.search(e.value);
 
   if (errors) {
     errors.forEach((error) => {
@@ -85,9 +77,15 @@ const search = async (e) => {
           >
         </li>
       </ul>
-      <p v-if="results.length" class="text-zinc-400 text-xs">Fandt {{ results.length }} {{ results.length == 1 ? 'resultat': 'resultater'}}</p>
+      <p v-if="results.length" class="text-zinc-400 text-xs">
+        Fandt {{ results.length }}
+        {{ results.length == 1 ? "resultat" : "resultater" }}
+      </p>
     </div>
-    <div v-if="selected" class="flex items-center justify-between p-2 rounded odd:bg-zinc-900/50">
+    <div
+      v-if="selected"
+      class="flex items-center justify-between p-2 rounded odd:bg-zinc-900/50"
+    >
       <UserSmall :user="selected" />
       <Button
         type="secondary"

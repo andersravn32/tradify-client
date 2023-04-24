@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       backendUrl: "http://localhost:4000",
+      caching: 20
     },
   },
 });

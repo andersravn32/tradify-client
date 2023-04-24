@@ -7,7 +7,7 @@ import {
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useNotificationStore from "~/stores/NotificationStore";
+import useUserStore from "~/stores/UserStore";
 
 const props = defineProps({
   user: {
@@ -16,43 +16,19 @@ const props = defineProps({
   },
   position: {
     type: String,
-    default: "right"
-  }
+    default: "right",
+  },
 });
 
 defineEmits(["close"]);
 
 // Use auth store
 const authStore = useAuthStore();
-const notificationStore = useNotificationStore();
+const userStore = useUserStore();
 const router = useRouter();
-const runtimeConfig = useRuntimeConfig();
 const modal = useModal();
 
-const user = ref({
-  ...props.user,
-});
-
-if (!user.value.trades) {
-  const { data, errors } = await fetch(
-    `${runtimeConfig.public.backendUrl}/user/${user.value.uuid}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: storeToRefs(authStore).accessToken.value,
-      },
-    }
-  ).then((res) => res.json());
-
-  if (errors) {
-    errors.forEach((error) => {
-      notificationStore.add("error", error);
-    });
-  }
-
-  user.value = data;
-}
+const user = await userStore.find(props.user.uuid);
 </script>
 
 <template>
@@ -60,39 +36,60 @@ if (!user.value.trades) {
   <div class="user-card" :class="`user-card-${position}`">
     <UserAvatar class="mx-auto" size="xl" :url="user.profile.avatar" />
     <div class="flex flex-col items-center">
-      <span class="font-semibold text-lg text-zinc-50 flex items-center space-x-2"><span>{{ user.profile.firstName
-      }}</span>
+      <span
+        class="font-semibold text-lg text-zinc-50 flex items-center space-x-2"
+        ><span>{{ user.profile.firstName }}</span>
         <CheckBadgeIcon v-if="user.verified" class="h-6 w-6 text-sky-500" />
       </span>
       <span class="text-sm text-zinc-400">@{{ user.identifier }}</span>
-      <UserRole v-if="user.role.permissionLevel >= 3" class="mt-2" :role="user.role" />
+      <UserRole
+        v-if="user.role.permissionLevel >= 3"
+        class="mt-2"
+        :role="user.role"
+      />
     </div>
     <TradeCounter v-if="user.trades" :trades="user.trades" :uuid="user.uuid" />
 
-    <ul class="flex flex-col space-y-4" v-if="storeToRefs(authStore).user.value.uuid == user.uuid">
+    <ul
+      class="flex flex-col space-y-4"
+      v-if="storeToRefs(authStore).user.value.uuid == user.uuid"
+    >
       <li>
         <NuxtLink class="router-link" to="/">
           <QuestionMarkCircleIcon class="h-6 w-6" /><span>F.A.Q</span>
         </NuxtLink>
       </li>
       <li>
-        <Button type="tertiary" class="flex items-center space-x-2 signout" @click="() => {
-            authStore.signout();
-            router.push('/signin');
-          }
-          ">
+        <Button
+          type="tertiary"
+          class="flex items-center space-x-2 signout"
+          @click="
+            () => {
+              authStore.signout();
+              router.push('/signin');
+            }
+          "
+        >
           <ArrowLeftOnRectangleIcon class="h-6 w-6" /><span>Log ud</span>
         </Button>
       </li>
     </ul>
-    <ul class="flex flex-col space-y-4" v-if="storeToRefs(authStore).user.value.uuid != user.uuid">
+    <ul
+      class="flex flex-col space-y-4"
+      v-if="storeToRefs(authStore).user.value.uuid != user.uuid"
+    >
       <li>
-        <NuxtLink class="router-link" @click="(e) => {
-            $emit('close', e);
-            modal.currentModal = '';
-            modal.show = false;
-          }
-          " :to="`/profile/${user.identifier}`">
+        <NuxtLink
+          class="router-link"
+          @click="
+            (e) => {
+              $emit('close', e);
+              modal.currentModal = '';
+              modal.show = false;
+            }
+          "
+          :to="`/profile/${user.identifier}`"
+        >
           <UserIcon class="h-6 w-6" /><span>Besøg profil</span>
         </NuxtLink>
       </li>

@@ -47,7 +47,7 @@ const useUserStore = defineStore("user", () => {
   // Returns deep user object
   const find = async (id, forceUpdate = false) => {
     const saved = users.value.filter((user) => {
-      return user.uuid == id && user.loaded + 10 >= new Date() / 1000;
+      return user.uuid == id && user.loaded + runtimeConfig.public.caching >= new Date() / 1000;
     })[0];
 
     if (saved && saved.trades && !forceUpdate) {

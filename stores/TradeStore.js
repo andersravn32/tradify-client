@@ -13,7 +13,7 @@ const useTradeStore = defineStore("trade", () => {
   // Method responsible for loading invididual trades
   const load = async (id, forceUpdate = false) => {
     const saved = trades.value.filter((trade) => {
-      return trade._id == id && trade.loaded + 10 >= new Date() / 1000;
+      return trade._id == id && trade.loaded + runtimeConfig.public.caching >= new Date() / 1000;
     })[0];
 
     if (saved && !forceUpdate) {
@@ -46,7 +46,7 @@ const useTradeStore = defineStore("trade", () => {
     // Add new trade
     trades.value.push({
       ...data,
-      loaded: new Date(data.date) / 1000,
+      loaded: new Date() / 1000,
     });
 
     return trades.value[trades.value.length - 1];

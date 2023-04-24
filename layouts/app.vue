@@ -1,7 +1,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import useDataStore from "~/stores/DataStore";
-const dataStore = useDataStore();
+import useTradeStore from "~/stores/TradeStore";
+import useNotificationStore from "~/stores/NotificationStore"
+
+const tradeStore = useTradeStore();
+const notificationStore = useNotificationStore()
 </script>
 
 <template>
@@ -11,10 +14,10 @@ const dataStore = useDataStore();
         <FormTradeCreate />
       </Modal>
       <Modal id="modal-form-trade-respond">
-        <FormTradeRespond :trade="storeToRefs(dataStore).trade.value" />
+        <FormTradeRespond :trade="storeToRefs(tradeStore).trade.value" />
       </Modal>
       <Modal id="modal-form-trade-rate">
-        <FormTradeRate :trade="storeToRefs(dataStore).trade.value" />
+        <FormTradeRate :trade="storeToRefs(tradeStore).trade.value" />
       </Modal>
     </ModalOverlay>
     <div id="navigation">
@@ -22,7 +25,7 @@ const dataStore = useDataStore();
       <Topnav />
     </div>
     <div id="extra">
-      <Notifications v-if="storeToRefs(dataStore).notifications.value.length"/>
+      <Notifications v-if="storeToRefs(notificationStore).notifications.value.length"/>
     </div>
     <div id="content">
       <slot />

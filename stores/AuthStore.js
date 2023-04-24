@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
-import useDataStore from "./DataStore";
+import useNotificationStore from "./NotificationStore";
 
 const useAuthStore = defineStore("auth", () => {
   const accessToken = useCookie("accessToken");
   const refreshToken = useCookie("refreshToken");
   const runtimeConfig = useRuntimeConfig();
-  const dataStore = useDataStore();
+  const notificationStore = useNotificationStore();
 
   const user = ref(null);
 
@@ -32,7 +32,7 @@ const useAuthStore = defineStore("auth", () => {
 
     // If errors occurred, reset store state
     if (errors) {
-      dataStore.addNotification("info", {
+      notificationStore.add("info", {
         msg: "Din tidligere gemte session er desværre udløbet, log venligst på igen",
       });
       clear();

@@ -6,7 +6,7 @@ const props = defineProps({
   },
   position: {
     type: String,
-    default: "left",
+    default: "right",
   },
 });
 
@@ -39,10 +39,10 @@ const open = ref(props.open);
 }
 
 .button-position-left {
-    @apply left-full top-0 ml-2;
+    @apply right-full top-0 mr-2;
 }
 .button-position-right {
-    @apply right-full top-0 mr-2;
+    @apply left-full top-0 ml-2;
 }
 .button-position-top {
     @apply bottom-full mb-2;

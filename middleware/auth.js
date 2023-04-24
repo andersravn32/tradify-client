@@ -1,14 +1,15 @@
 import useAuthStore from "~/stores/AuthStore";
 import { storeToRefs } from "pinia";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
+
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const refreshToken = useCookie("refreshToken");
   const authStore = useAuthStore();
-  const dataStore = useDataStore();
+  const notificationStore = useNotificationStore();
 
   if (!(to.meta.layout == from.meta.layout)) {
-    storeToRefs(dataStore).notifications.value = [];
+    storeToRefs(notificationStore).notifications.value = [];
   }
 
   if (!refreshToken.value) {

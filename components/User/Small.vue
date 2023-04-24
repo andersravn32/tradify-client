@@ -1,9 +1,9 @@
 <script setup>
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
-const dataStore = useDataStore();
+const notificationStore = useNotificationStore();
 
 defineProps({
   user: {
@@ -26,8 +26,8 @@ const notificationBuffer = ref([]);
 const displayUserCard = (e) => {
   if (!showUserCard.value && e.target.className != "overlay") {
     showUserCard.value = true;
-    notificationBuffer.value = storeToRefs(dataStore).notifications.value;
-    storeToRefs(dataStore).notifications.value = [];
+    notificationBuffer.value = storeToRefs(notificationStore).notifications.value;
+    storeToRefs(notificationStore).notifications.value = [];
   }
 };
 
@@ -35,7 +35,7 @@ const hideUserCard = (e) => {
   if (showUserCard.value) {
     showUserCard.value = false;
     notificationBuffer.value.forEach((notification) => {
-      dataStore.addNotification(
+      notificationStore.add(
         notification.type,
         notification.data,
         notification.timeout

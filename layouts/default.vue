@@ -1,8 +1,8 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
-const dataStore = useDataStore();
+const notificationStore = useNotificationStore();
 </script>
 
 <template>
@@ -11,7 +11,7 @@ const dataStore = useDataStore();
       <Navbar />
     </div>
     <div id="extra">
-      <Notifications v-if="storeToRefs(dataStore).notifications.value.length" />
+      <Notifications v-if="storeToRefs(notificationStore).notifications.value.length" />
     </div>
     <div id="content">
       <slot />

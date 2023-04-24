@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col items-start">
     <span
       v-if="role.permissionLevel == 3"
       class="border border-indigo-500 rounded-full text-indigo-500 px-3 py-1 text-sm font-semibold"

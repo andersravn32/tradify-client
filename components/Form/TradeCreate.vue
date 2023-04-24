@@ -1,10 +1,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
 const authStore = useAuthStore();
-const dataStore = useDataStore();
+const notificationStore = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
 const modal = useModal();
 const router = useRouter();
@@ -49,14 +49,14 @@ const create = async () => {
 
   if (errors) {
     errors.forEach((error) => {
-      dataStore.addNotification("error", error);
+      notificationStore.add("error", error);
     });
     return;
   }
 
   modal.value.currentModal = "";
   modal.value.show = false;
-  dataStore.addNotification("info", {
+  notificationStore.add("info", {
     msg: `Du har nu oprettet en ny handel: ${data._id}`
   });
   return router.push(`/trade/${data._id}`);

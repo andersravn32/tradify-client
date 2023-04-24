@@ -3,14 +3,15 @@ import {
   ArrowsRightLeftIcon,
   EllipsisHorizontalIcon,
   CalendarIcon,
+  PencilIcon,
 } from "@heroicons/vue/24/outline";
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
 const authStore = useAuthStore();
-const dataStore = useDataStore();
+const notificationStore = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps({
@@ -37,7 +38,7 @@ if (!user.value.trades) {
 
   if (errors) {
     errors.forEach((error) => {
-      dataStore.addNotification("error", error);
+      notificationStore.add("error", error);
     });
   }
 
@@ -48,13 +49,13 @@ if (!user.value.trades) {
 <template>
   <div class="user-profile">
     <div class="user-profile-header">
-      <UserCover :url="user.profile.cover">
-        <UserAvatar class="shadow-lg" size="xl" :url="user.profile.avatar"
-      /></UserCover>
-      <div class="flex items-center justify-between px-4">
-        <div class="user-details">
+      <UserCover :url="user.profile.cover" />
+      <UserAvatar size="xl" :url="user.profile.avatar" />
+
+      <div class="user-details">
+        <div class="flex flex-col">
           <span
-            class="text-2xl pt-2 font-semibold text-zinc-50 flex items-center space-x-2"
+            class="text-2xl font-semibold text-zinc-50 flex items-center space-x-2"
             ><span>{{ user.profile.firstName }}</span>
             <CheckBadgeIcon v-if="user.verified" class="h-6 w-6 text-sky-500"
           /></span>
@@ -65,12 +66,23 @@ if (!user.value.trades) {
             :role="user.role"
           />
         </div>
-        <div class="user-options">
-          <Button type="icon"
-            ><EllipsisHorizontalIcon class="h-6 w-6 text-zinc-50"
-          /></Button>
-          <Button type="secondary">Kontakt</Button>
-          <Button>Anmod</Button>
+
+        <div class="flex space-x-4">
+          <DropdownButton position="left">
+            <template #icon>
+              <EllipsisHorizontalIcon class="h-6 w-6 text-zinc-50" />
+            </template>
+            <template #content>
+              <ul class="flex flex-col space-y-2 w-32">
+                <li>
+                  <span class="router-link">
+                    <PencilIcon class="h-5 w-5" />
+                    <span>Rediger profil</span>
+                  </span>
+                </li>
+              </ul>
+            </template>
+          </DropdownButton>
         </div>
       </div>
     </div>
@@ -97,18 +109,18 @@ if (!user.value.trades) {
 }
 
 .user-profile .user-cover {
-  @apply h-48 mb-8;
+  @apply h-48;
 }
 
-.user-profile .user-cover .user-avatar {
-  @apply absolute left-4 -bottom-8;
+.user-profile .user-avatar {
+  @apply absolute -translate-y-1/2;
 }
 
 .user-profile .user-details {
-  @apply flex flex-col items-start;
+  @apply mt-16 p-4 flex justify-between;
 }
 
-.user-profile .user-options {
-  @apply flex items-center space-x-4;
+.user-profile .router-link {
+  @apply font-semibold flex items-center space-x-2 text-zinc-400 hover:text-zinc-50 text-xs cursor-pointer;
 }
 </style>

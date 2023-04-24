@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import useDataStore from "~/stores/DataStore";
+import useTradeStore from "~/stores/TradeStore";
 
 definePageMeta({
   layout: "app",
@@ -9,17 +9,17 @@ definePageMeta({
 });
 
 const router = useRouter();
-const dataStore = useDataStore();
+const tradeStore = useTradeStore();
 
-storeToRefs(dataStore).trade.value = await dataStore.loadTrade(router.currentRoute.value.params.id, true);
+storeToRefs(tradeStore).trade.value = await tradeStore.load(router.currentRoute.value.params.id, true);
 </script>
 
 <template>
   <section id="page-trade">
-    <TradeHeader :trade="storeToRefs(dataStore).trade.value" />
+    <TradeHeader :trade="storeToRefs(tradeStore).trade.value" />
     <Tabs>
       <Tab title="Information">
-        <TradeInformation :trade="storeToRefs(dataStore).trade.value"/>
+        <TradeInformation :trade="storeToRefs(tradeStore).trade.value"/>
       </Tab>
       <Tab title="Kommunikation">
 

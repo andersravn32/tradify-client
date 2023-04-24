@@ -1,7 +1,8 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useDataStore from "~/stores/DataStore";
+import useTradeStore from "~/stores/TradeStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
 const props = defineProps({
   trade: {
@@ -13,7 +14,8 @@ const props = defineProps({
 const authStore = useAuthStore();
 const runtimeConfig = useRuntimeConfig();
 const modal = useModal();
-const dataStore = useDataStore();
+const tradeStore = useTradeStore();
+const notificationStore = useNotificationStore();
 const router = useRouter();
 
 const accept = async () => {
@@ -34,19 +36,19 @@ const accept = async () => {
 
   if (errors) {
     errors.forEach((error) => {
-      dataStore.addNotification("error", error);
+      notificationStore.add("error", error);
     });
     return;
   }
 
   modal.value.currentModal = "";
   modal.value.show = false;
-  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(
+  storeToRefs(tradeStore).trade.value = await tradeStore.load(
     props.trade._id,
     true
   );
 
-  dataStore.addNotification("info", {
+  notificationStore.add("info", {
     msg: `Du har besvaret handel: ${props.trade._id}`,
   });
 
@@ -73,7 +75,7 @@ const reject = async () => {
 
   if (errors) {
     errors.forEach((error) => {
-      dataStore.addNotification("error", error);
+      notificationStore.add("error", error);
     });
     return;
   }
@@ -81,12 +83,12 @@ const reject = async () => {
   modal.value.currentModal = "";
   modal.value.show = false;
 
-  storeToRefs(dataStore).trade.value = await dataStore.loadTrade(
+  storeToRefs(tradeStore).trade.value = await tradeStore.load(
     props.trade._id,
     true
   );
 
-  dataStore.addNotification("info", {
+  notificationStore.add("info", {
     msg: `Du har besvaret handel: ${props.trade._id}`,
   });
 

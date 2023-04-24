@@ -7,7 +7,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useDataStore from "~/stores/DataStore";
+import useTradeStore from "~/stores/TradeStore";
 
 const props = defineProps({
   trade: {
@@ -19,9 +19,9 @@ const props = defineProps({
 const authStore = useAuthStore();
 const router = useRouter();
 const modal = useModal();
-const dataStore = useDataStore();
+const tradeStore = useTradeStore();
 
-const trade = await dataStore.loadTrade(props.trade._id)
+const trade = await tradeStore.load(props.trade._id)
 </script>
 
 <template>
@@ -59,7 +59,7 @@ const trade = await dataStore.loadTrade(props.trade._id)
               <span
                 class="router-link"
                 @click="
-                  storeToRefs(dataStore).trade.value = trade;
+                  storeToRefs(tradeStore).trade.value = trade;
                   modal.currentModal = 'modal-form-trade-respond';
                   modal.show = true;
                 "
@@ -83,7 +83,7 @@ const trade = await dataStore.loadTrade(props.trade._id)
               <span
                 class="router-link"
                 @click="
-                  storeToRefs(dataStore).trade.value = trade;
+                  storeToRefs(tradeStore).trade.value = trade;
                   modal.currentModal = 'modal-form-trade-rate';
                   modal.show = true;
                 "

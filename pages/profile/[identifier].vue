@@ -1,7 +1,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
 definePageMeta({
   layout: "app",
@@ -11,7 +11,7 @@ definePageMeta({
 
 const router = useRouter();
 const authStore = useAuthStore();
-const dataStore = useDataStore();
+const notificationStore = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
 
 const { data, errors } = await fetch(
@@ -27,7 +27,7 @@ const { data, errors } = await fetch(
 
 if (errors) {
   errors.forEach((error) => {
-    dataStore.addNotification("error", error);
+    notificationStore.add("error", error);
   });
 }
 </script>

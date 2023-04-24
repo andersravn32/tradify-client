@@ -6,11 +6,11 @@ import {
   EnvelopeIcon,
 } from "@heroicons/vue/24/outline";
 import { storeToRefs } from "pinia";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
 const router = useRouter();
 
-const dataStore = useDataStore();
+const notificationStore = useNotificationStore();
 </script>
 
 <template>
@@ -18,11 +18,11 @@ const dataStore = useDataStore();
     :class="`notifications notifications-${router.currentRoute.value.meta.layout}`"
   >
     <li
-      v-for="(notification, index) in storeToRefs(dataStore).notifications
+      v-for="(notification, index) in storeToRefs(notificationStore).notifications
         .value"
       :class="`notification notification-${notification.type}`"
       :key="index"
-      @click="storeToRefs(dataStore).notifications.value.splice(index, 1)"
+      @click="storeToRefs(notificationStore).notifications.value.splice(index, 1)"
     >
       <ExclamationCircleIcon
         v-if="notification.type == 'error'"

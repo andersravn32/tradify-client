@@ -2,11 +2,11 @@
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useDataStore from "~/stores/DataStore";
+import useTradeStore from "~/stores/TradeStore";
 
 const router = useRouter();
 const authStore = useAuthStore();
-const dataStore = useDataStore();
+const tradeStore = useTradeStore();
 const modal = useModal();
 
 defineProps({
@@ -28,7 +28,7 @@ defineProps({
         @click="router.push(`/profile/${trade.from.identifier}`)"
         :class="{ 'opacity-50': !trade.from.confirmed }"
       >
-        <UserAvatar size="xl" :url="trade.from.profile.avatar" />
+        <UserAvatar class="mb-4" size="xl" :url="trade.from.profile.avatar" />
         <span
           class="font-semibold text-2xl text-zinc-50 flex items-center space-x-2"
           ><span>{{ trade.from.profile.firstName }}</span>
@@ -78,7 +78,7 @@ defineProps({
               <Button
                 v-if="trade.from.uuid == storeToRefs(authStore).user.value.uuid"
                 @click="
-                  storeToRefs(dataStore).trade.value = trade;
+                  storeToRefs(strade).trade.value = trade;
                   modal.currentModal = 'modal-form-trade-rate';
                   modal.show = true;
                 "
@@ -120,7 +120,7 @@ defineProps({
         @click="router.push(`/profile/${trade.to.identifier}`)"
         :class="{ 'opacity-50': !trade.to.confirmed }"
       >
-        <UserAvatar size="xl" :url="trade.to.profile.avatar" />
+        <UserAvatar class="mb-4" size="xl" :url="trade.to.profile.avatar" />
         <span
           class="font-semibold text-2xl text-zinc-50 flex items-center space-x-2"
           ><span>{{ trade.to.profile.firstName }}</span>
@@ -150,7 +150,7 @@ defineProps({
                 !trade.to.confirmed
               "
               @click="
-                storeToRefs(dataStore).trade.value = trade;
+                storeToRefs(tradeStore).trade.value = trade;
                 modal.currentModal = 'modal-form-trade-respond';
                 modal.show = true;
               "
@@ -186,7 +186,7 @@ defineProps({
               <Button
                 v-if="trade.to.uuid == storeToRefs(authStore).user.value.uuid"
                 @click="
-                  storeToRefs(dataStore).trade.value = trade;
+                  storeToRefs(tradeStore).trade.value = trade;
                   modal.currentModal = 'modal-form-trade-rate';
                   modal.show = true;
                 "

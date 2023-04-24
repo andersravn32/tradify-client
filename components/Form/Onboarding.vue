@@ -1,11 +1,11 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
 const router = useRouter();
 const authStore = useAuthStore();
-const dataStore = useDataStore();
+const notificationStore = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
 
 const onboardingIndex = ref(0);
@@ -39,7 +39,7 @@ const save = async () => {
   loading.value = false;
   if (errors) {
     errors.forEach((error) => {
-      dataStore.addNotification("error", error);
+      notificationStore.add("error", error);
     });
     return;
   }

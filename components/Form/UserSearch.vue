@@ -1,10 +1,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useDataStore from "~/stores/DataStore";
+import useNotificationStore from "~/stores/NotificationStore";
 
 const authStore = useAuthStore();
-const dataStore = useDataStore();
+const notificationStore = useNotificationStore()
 const runtimeConfig = useRuntimeConfig();
 
 function debounce(func, timeout = 300) {
@@ -44,7 +44,7 @@ const search = async (e) => {
 
   if (errors) {
     errors.forEach((error) => {
-      dataStore.addNotification("error", error);
+      notificationStore.add("error", error);
     });
     return;
   }

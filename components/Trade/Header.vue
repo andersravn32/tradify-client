@@ -26,7 +26,10 @@ defineProps({
       <div
         class="flex flex-col justify-center items-center cursor-pointer"
         @click="router.push(`/profile/${trade.from.identifier}`)"
-        :class="{ 'opacity-50': !trade.from.confirmed }"
+        :class="{
+          'opacity-50':
+            trade.from.confirmed === 0 || trade.from.confirmed === -1,
+        }"
       >
         <UserAvatar class="mb-4" size="xl" :url="trade.from.profile.avatar" />
         <span
@@ -41,17 +44,20 @@ defineProps({
       <div class="trade-header-details">
         <div class="flex flex-col space-y-2 p-4">
           <span class="text-xs uppercase text-zinc-400">Status:</span>
-          <span v-if="trade.from.confirmed" class="text-sm text-zinc-50"
+          <span v-if="trade.from.confirmed === 1" class="text-sm text-zinc-50"
             >Bekræftet</span
           >
           <span
-            v-if="!trade.from.confirmed"
+            v-if="trade.from.confirmed === 0"
             class="text-sm text-zinc-400 italic"
             >Afventer</span
           >
+          <span v-if="trade.from.confirmed === -1" class="text-sm text-red-500"
+            >Afvist</span
+          >
         </div>
         <div class="col-span-2 grid grid-cols-2 p-4">
-          <div class="flex flex-col space-y-2">
+          <div class="flex flex-col space-y-2 items-start">
             <span class="text-xs uppercase text-zinc-400">Bedømmelse:</span>
             <div v-if="trade.from.rating">
               <span
@@ -70,32 +76,33 @@ defineProps({
                 >Negativ</span
               >
             </div>
-            <div
+            <Button
               v-if="
-                trade.from.confirmed && trade.to.confirmed && !trade.from.rating
+                trade.from.uuid == storeToRefs(authStore).user.value.uuid &&
+                trade.from.confirmed === 1 &&
+                trade.to.confirmed === 1 &&
+                !trade.from.rating
               "
+              @click="
+                storeToRefs(tradeStore).trade.value = trade;
+                modal.currentModal = 'modal-form-trade-rate';
+                modal.show = true;
+              "
+              size="sm"
+              >Bedøm</Button
             >
-              <Button
-                v-if="trade.from.uuid == storeToRefs(authStore).user.value.uuid"
-                @click="
-                  storeToRefs(strade).trade.value = trade;
-                  modal.currentModal = 'modal-form-trade-rate';
-                  modal.show = true;
-                "
-                size="sm"
-                >Bedøm</Button
-              >
-              <span
-                class="text-zinc-50"
-                v-if="
-                  !(trade.from.uuid == storeToRefs(authStore).user.value.uuid)
-                "
-                >-</span
-              >
-            </div>
             <span
               class="text-zinc-50 text-sm"
               v-if="!trade.from.confirmed || !trade.to.confirmed"
+              >-</span
+            >
+            <span
+              class="text-sm text-zinc-50"
+              v-if="
+                trade.from.uuid == storeToRefs(authStore).user.value.uuid &&
+                !trade.to.rating &&
+                (trade.to.confirmed === -1 || trade.to.confirmed === 0)
+              "
               >-</span
             >
           </div>
@@ -118,7 +125,9 @@ defineProps({
       <div
         class="flex flex-col justify-center items-center cursor-pointer"
         @click="router.push(`/profile/${trade.to.identifier}`)"
-        :class="{ 'opacity-50': !trade.to.confirmed }"
+        :class="{
+          'opacity-50': trade.to.confirmed == 0 || trade.to.confirmed == -1,
+        }"
       >
         <UserAvatar class="mb-4" size="xl" :url="trade.to.profile.avatar" />
         <span
@@ -131,23 +140,26 @@ defineProps({
       <div class="trade-header-details">
         <div class="flex flex-col space-y-2 p-4 items-start">
           <span class="text-xs uppercase text-zinc-400">Status:</span>
-          <span v-if="trade.to.confirmed" class="text-sm text-zinc-50"
+          <span v-if="trade.to.confirmed === 1" class="text-sm text-zinc-50"
             >Bekræftet</span
           >
           <span class="flex items-center justify-between w-full">
             <span
               v-if="
                 trade.to.uuid != storeToRefs(authStore).user.value.uuid &&
-                !trade.to.confirmed
+                trade.to.confirmed === 0
               "
               class="text-sm text-zinc-400 italic"
               >Afventer</span
+            >
+            <span v-if="trade.to.confirmed === -1" class="text-sm text-red-500"
+              >Afvist</span
             >
             <Button
               size="sm"
               v-if="
                 trade.to.uuid == storeToRefs(authStore).user.value.uuid &&
-                !trade.to.confirmed
+                trade.to.confirmed === 0
               "
               @click="
                 storeToRefs(tradeStore).trade.value = trade;
@@ -159,7 +171,7 @@ defineProps({
           </span>
         </div>
         <div class="col-span-2 grid grid-cols-2 p-4">
-          <div class="flex flex-col space-y-2">
+          <div class="flex flex-col space-y-2 items-start">
             <span class="text-xs uppercase text-zinc-400">Bedømmelse:</span>
             <div v-if="trade.to.rating">
               <span
@@ -178,33 +190,27 @@ defineProps({
                 >Negativ</span
               >
             </div>
-            <div
+            <Button
               v-if="
-                trade.from.confirmed && trade.to.confirmed && !trade.to.rating
+                trade.to.uuid == storeToRefs(authStore).user.value.uuid &&
+                trade.from.confirmed === 1 &&
+                trade.to.confirmed === 1 &&
+                !trade.to.rating
               "
+              @click="
+                storeToRefs(tradeStore).trade.value = trade;
+                modal.currentModal = 'modal-form-trade-rate';
+                modal.show = true;
+              "
+              size="sm"
+              >Bedøm</Button
             >
-              <Button
-                v-if="trade.to.uuid == storeToRefs(authStore).user.value.uuid"
-                @click="
-                  storeToRefs(tradeStore).trade.value = trade;
-                  modal.currentModal = 'modal-form-trade-rate';
-                  modal.show = true;
-                "
-                size="sm"
-                >Bedøm</Button
-              >
-              <span
-                class="text-zinc-50"
-                v-if="
-                  !(trade.to.uuid == storeToRefs(authStore).user.value.uuid)
-                "
-                >-</span
-              >
-            </div>
-
             <span
-              class="text-zinc-50 text-sm"
-              v-if="!trade.from.confirmed || !trade.to.confirmed"
+              class="text-sm text-zinc-50"
+              v-if="
+                !(trade.to.uuid == storeToRefs(authStore).user.value.uuid) &&
+                !trade.to.rating
+              "
               >-</span
             >
           </div>

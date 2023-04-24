@@ -32,6 +32,6 @@ const dataStore = useDataStore();
 
 <style>
 #layout-app #content {
-  @apply pl-80 pt-[74px];
+  @apply pl-80 pt-[74px] min-h-screen;
 }
 </style>

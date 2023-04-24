@@ -15,13 +15,8 @@ defineProps({
 
 <template>
   <div class="user-cover">
-    <img
-      v-if="url"
-      class="h-full w-full object-cover"
-      crossorigin="anonymous"
-      :src="`${url}?token=${authStoreRefs.accessToken.value}`"
-      alt="User avatar"
-    />
+    <img v-if="url" class="h-full w-full object-cover" crossorigin="anonymous"
+      :src="`${url}?token=${authStoreRefs.accessToken.value}`" alt="User avatar" />
     <div v-if="!url" class="h-full w-full object-cover user-cover-standin">
     </div>
     <slot />
@@ -33,7 +28,7 @@ defineProps({
   @apply w-full relative;
 }
 
-.user-cover-standin{
-  @apply bg-gradient-to-tr from-indigo-700 to-indigo-900;
+.user-cover-standin {
+  @apply bg-indigo-500;
 }
 </style>

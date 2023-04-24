@@ -1,9 +1,11 @@
 import { defineStore, storeToRefs } from "pinia";
 import useAuthStore from "./AuthStore";
+import useNotificationStore from "./NotificationStore";
 
 const useTradeStore = defineStore("trade", () => {
   const runtimeConfig = useRuntimeConfig();
   const authStore = useAuthStore();
+  const notificationStore = useNotificationStore();
 
   const trade = ref(null);
   const trades = ref([]);
@@ -31,7 +33,7 @@ const useTradeStore = defineStore("trade", () => {
 
     if (errors) {
       errors.forEach((error) => {
-        addNotification("error", error);
+        notificationStore.add("error", error);
       });
       return;
     }

@@ -1,6 +1,5 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import useAuthStore from "~/stores/AuthStore";
 import useDataStore from "~/stores/DataStore";
 
 definePageMeta({

@@ -1,15 +1,20 @@
 <script setup>
 defineProps({
-    title: {
-        required: true
-    }
-})
+  title: {
+    type: String,
+    required: true,
+  },
+  hidden: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const selectedTitle = inject("selectedTitle");
 </script>
 
 <template>
-    <div v-if="selectedTitle == title" class="tab">
-        <slot />
-    </div>
+  <div v-if="selectedTitle == title && !hidden" class="tab">
+    <slot />
+  </div>
 </template>

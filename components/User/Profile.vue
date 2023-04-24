@@ -9,10 +9,12 @@ import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 import useNotificationStore from "~/stores/NotificationStore";
+import useUserStore from "~/stores/UserStore";
 
 const authStore = useAuthStore();
 const notificationStore = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
+const userStore = useUserStore();
 
 const props = defineProps({
   user: {
@@ -20,30 +22,9 @@ const props = defineProps({
     required: true,
   },
 });
-const user = ref({
-  ...props.user,
-});
 
-if (!user.value.trades) {
-  const { data, errors } = await fetch(
-    `${runtimeConfig.public.backendUrl}/user/${user.value.uuid}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: storeToRefs(authStore).accessToken.value,
-      },
-    }
-  ).then((res) => res.json());
+const user = await userStore.find(props.user.uuid);
 
-  if (errors) {
-    errors.forEach((error) => {
-      notificationStore.add("error", error);
-    });
-  }
-
-  user.value = data;
-}
 </script>
 
 <template>

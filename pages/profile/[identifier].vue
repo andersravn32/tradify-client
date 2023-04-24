@@ -2,6 +2,7 @@
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 import useNotificationStore from "~/stores/NotificationStore";
+import useUserStore from "~/stores/UserStore";
 
 definePageMeta({
   layout: "app",
@@ -10,26 +11,9 @@ definePageMeta({
 });
 
 const router = useRouter();
-const authStore = useAuthStore();
-const notificationStore = useNotificationStore();
-const runtimeConfig = useRuntimeConfig();
+const userStore = useUserStore();
+const { data } = await userStore.search(router.currentRoute.value.params.identifier);
 
-const { data, errors } = await fetch(
-  `${runtimeConfig.public.backendUrl}/users/${router.currentRoute.value.params.identifier}`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: storeToRefs(authStore).accessToken.value,
-    },
-  }
-).then((res) => res.json());
-
-if (errors) {
-  errors.forEach((error) => {
-    notificationStore.add("error", error);
-  });
-}
 </script>
 
 <template>

@@ -4,13 +4,13 @@ const useNotificationStore = defineStore("notification", () => {
   // Notification related data
   const notifications = ref([]);
 
-  const add = (type = "info", data, timeout = 3000) => {
+  const add = (type = "info", data, timeout = 4000) => {
     notifications.value.push({
       type: type,
       data: data,
     });
     setTimeout(() => {
-      //notifications.value.splice(notifications.value.length - 1, 1);
+      notifications.value.splice(notifications.value.length - 1, 1);
     }, timeout);
   };
 

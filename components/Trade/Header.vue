@@ -76,35 +76,24 @@ defineProps({
                 >Negativ</span
               >
             </div>
-            <Button
+            <div
+              class="flex"
               v-if="
                 trade.from.uuid == storeToRefs(authStore).user.value.uuid &&
-                trade.from.confirmed === 1 &&
-                trade.to.confirmed === 1 &&
                 !trade.from.rating
               "
-              @click="
-                storeToRefs(tradeStore).trade.value = trade;
-                modal.currentModal = 'modal-form-trade-rate';
-                modal.show = true;
-              "
-              size="sm"
-              >Bedøm</Button
             >
-            <span
-              class="text-zinc-50 text-sm"
-              v-if="!trade.from.confirmed || !trade.to.confirmed"
-              >-</span
-            >
-            <span
-              class="text-sm text-zinc-50"
-              v-if="
-                trade.from.uuid == storeToRefs(authStore).user.value.uuid &&
-                !trade.to.rating &&
-                (trade.to.confirmed === -1 || trade.to.confirmed === 0)
-              "
-              >-</span
-            >
+              <Button
+                v-if="trade.from.confirmed === 1 && trade.to.confirmed === 1"
+                @click="
+                  storeToRefs(tradeStore).trade.value = trade;
+                  modal.currentModal = 'modal-form-trade-rate';
+                  modal.show = true;
+                "
+                size="sm"
+                >Bedøm</Button
+              >
+            </div>
           </div>
           <div class="flex flex-col space-y-2">
             <span class="text-xs uppercase text-zinc-400">Kommentar:</span>
@@ -204,14 +193,6 @@ defineProps({
               "
               size="sm"
               >Bedøm</Button
-            >
-            <span
-              class="text-sm text-zinc-50"
-              v-if="
-                !(trade.to.uuid == storeToRefs(authStore).user.value.uuid) &&
-                !trade.to.rating
-              "
-              >-</span
             >
           </div>
           <div class="flex flex-col space-y-2">

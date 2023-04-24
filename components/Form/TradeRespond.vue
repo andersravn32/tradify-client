@@ -109,7 +109,7 @@ const reject = async () => {
     </div>
     <div class="flex flex-col space-y-2">
       <label>Afsender</label>
-      <UserSmall class="bg-zinc-900 p-2 rounded" :user="trade.from" />
+      <UserSmall :user="trade.from" />
     </div>
     <div v-if="trade.middleman.uuid" class="flex flex-col space-y-2">
       <label>Mellemmand</label>

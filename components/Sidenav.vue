@@ -12,7 +12,7 @@ import {
     <NuxtLink id="logo-link" to="/dashboard">
       <Logo size="xs" />
     </NuxtLink>
-    <ul class="flex flex-col space-y-4">
+    <ul class="flex flex-col">
       <li>
         <NuxtLink class="router-link" to="/dashboard">
           <HomeIcon class="h-6 w-6" />
@@ -47,7 +47,7 @@ import {
 }
 
 #sidenav .router-link {
-  @apply flex items-center space-x-4 px-6 py-2 rounded font-semibold text-sm text-zinc-400 hover:text-zinc-100;
+  @apply flex items-center space-x-4 p-4 rounded font-semibold text-sm text-zinc-400 hover:text-zinc-100;
 }
 
 #sidenav {

@@ -11,16 +11,7 @@ const runtimeConfig = useRuntimeConfig();
 const onboardingIndex = ref(0);
 const loading = ref(false);
 
-const { data, errors } = await fetch(
-  `${runtimeConfig.public.backendUrl}/auth/refresh`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ token: storeToRefs(authStore).refreshToken.value }),
-  }
-).then((res) => res.json());
+const { data, errors } = await authStore.refresh()
 
 const user = ref({
   ...data.user,
@@ -74,8 +65,8 @@ const save = async () => {
         ekstra informationer omkring dig.
       </p>
       <div class="flex items-center justify-between">
-        <Button @click="router.push('/')" type="tertiary">Annuller</Button>
-        <Button @click="onboardingIndex++">Kom igang</Button>
+        <Button @click.prevent="router.push('/')" type="tertiary">Annuller</Button>
+        <Button @click.prevent="onboardingIndex++">Kom igang</Button>
       </div>
     </div>
     <div
@@ -100,8 +91,8 @@ const save = async () => {
         label="Efternavn"
       />
       <div class="flex items-center justify-between">
-        <Button @click="onboardingIndex--" type="tertiary">Tilbage</Button>
-        <Button @click="save()" :loading="loading">Gem</Button>
+        <Button @click.prevent="onboardingIndex--" type="tertiary">Tilbage</Button>
+        <Button @click.prevent="save()" :loading="loading">Gem</Button>
       </div>
     </div>
   </form>

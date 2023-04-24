@@ -23,8 +23,4 @@ const props = defineProps({
 .modal .input input, #form-trade-create textarea, #form-trade-rate textarea, .modal select {
   @apply bg-zinc-900;
 }
-
-.modal .user{
-  @apply bg-zinc-900 p-2 rounded;
-}
 </style>

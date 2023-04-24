@@ -50,7 +50,7 @@ const useUserStore = defineStore("user", () => {
       return user.uuid == id && user.loaded + 10 >= new Date() / 1000;
     })[0];
 
-    if (saved && !forceUpdate) {
+    if (saved && saved.trades && !forceUpdate) {
       return saved;
     }
 
@@ -81,6 +81,8 @@ const useUserStore = defineStore("user", () => {
       ...data,
       loaded: new Date() / 1000,
     });
+
+    return data;
   };
 
   return { user, users, search, find };

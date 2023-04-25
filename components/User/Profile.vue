@@ -67,20 +67,6 @@ const user = await userStore.find(props.user.uuid);
         </div>
       </div>
     </div>
-    <ul
-      class="flex flex-col space-y-2 mx-4 pt-4 text-xs border-t-2 border-zinc-800"
-    >
-      <li class="text-zinc-400 flex items-center space-x-2">
-        <ArrowsRightLeftIcon class="h-6 w-6" />
-        <span>Handler:</span>
-        <TradeCounter size="sm" :trades="user.trades" :uuid="user.uuid" />
-      </li>
-      <li class="text-zinc-400 flex items-center space-x-2">
-        <CalendarIcon class="h-6 w-6" />
-        <span>Medlem siden:</span>
-        <span>{{ new Date().toISOString().split("T")[0] }}</span>
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -94,7 +80,7 @@ const user = await userStore.find(props.user.uuid);
 }
 
 .user-profile .user-avatar {
-  @apply absolute -translate-y-1/2;
+  @apply absolute -translate-y-1/2 ml-4;
 }
 
 .user-profile .user-details {

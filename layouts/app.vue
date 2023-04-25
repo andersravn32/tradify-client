@@ -21,8 +21,9 @@ const notificationStore = useNotificationStore()
       </Modal>
     </ModalOverlay>
     <div id="navigation">
-      <Sidenav />
       <Topnav />
+      <Sidenav />
+      <Sidebar />
     </div>
     <div id="extra">
       <Notifications v-if="storeToRefs(notificationStore).notifications.value.length"/>
@@ -35,6 +36,6 @@ const notificationStore = useNotificationStore()
 
 <style>
 #layout-app #content {
-  @apply pl-80 pt-[74px] min-h-screen;
+  @apply pl-80 pt-[74px] pr-80 min-h-screen;
 }
 </style>

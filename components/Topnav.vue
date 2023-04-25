@@ -34,6 +34,6 @@ const router = useRouter();
 
 <style>
 #topnav {
-  @apply fixed top-0 right-0 left-80 p-4 border-b-2 border-zinc-800 flex justify-between items-center text-zinc-100 z-20;
+  @apply fixed top-0 right-0 left-80 p-4 bg-zinc-900 border-b-2 border-zinc-800 flex justify-between items-center text-zinc-100 z-20;
 }
 </style>

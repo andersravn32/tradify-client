@@ -20,6 +20,6 @@ const handleClick = (e) => {
 
 <style>
 #modals {
-  @apply bg-zinc-900/30 z-20 fixed top-0 left-0 right-0 bottom-0 grid place-items-center;
+  @apply bg-zinc-900/30 z-30 fixed top-0 left-0 right-0 bottom-0 grid place-items-center;
 }
 </style>

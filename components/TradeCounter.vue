@@ -21,6 +21,72 @@ const counts = ref({
 });
 
 // TODO: Rewrite trade count logic
+props.trades.forEach((trade) => {
+  if (trade.from.uuid == props.uuid) {
+    if (trade.to.rating && trade.to.rating.value === 1) {
+      counts.value.positive++;
+    }
+    if (trade.to.rating && trade.to.rating.value === 0) {
+      counts.value.neutral++;
+    }
+    if (trade.to.rating && trade.to.rating.value === -1) {
+      counts.value.negative++;
+    }
+
+    if (trade.middleman.rating && trade.middleman.rating.value === 1) {
+      counts.value.positive++;
+    }
+    if (trade.middleman.rating && trade.middleman.rating.value === 0) {
+      counts.value.neutral++;
+    }
+    if (trade.middleman.rating && trade.middleman.rating.value === -1) {
+      counts.value.negative++;
+    }
+  }
+
+  if (trade.to.uuid == props.uuid) {
+    if (trade.from.rating && trade.from.rating.value === 1) {
+      counts.value.positive++;
+    }
+    if (trade.from.rating && trade.from.rating.value === 0) {
+      counts.value.neutral++;
+    }
+    if (trade.from.rating && trade.from.rating.value === -1) {
+      counts.value.negative++;
+    }
+
+    if (trade.middleman.rating && trade.middleman.rating.value === 1) {
+      counts.value.positive++;
+    }
+    if (trade.middleman.rating && trade.middleman.rating.value === 0) {
+      counts.value.neutral++;
+    }
+    if (trade.middleman.rating && trade.middleman.rating.value === -1) {
+      counts.value.negative++;
+    }
+  }
+
+  if (trade.middleman.uuid == props.uuid) {
+    if (trade.from.rating && trade.from.rating.value === 1) {
+      counts.value.positive++;
+    }
+    if (trade.from.rating && trade.from.rating.value === 0) {
+      counts.value.neutral++;
+    }
+    if (trade.from.rating && trade.from.rating.value === -1) {
+      counts.value.negative++;
+    }
+    if (trade.to.rating && trade.to.rating.value === 1) {
+      counts.value.positive++;
+    }
+    if (trade.to.rating && trade.to.rating.value === 0) {
+      counts.value.neutral++;
+    }
+    if (trade.to.rating && trade.to.rating.value === -1) {
+      counts.value.negative++;
+    }
+  }
+});
 </script>
 
 <template>

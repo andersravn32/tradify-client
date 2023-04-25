@@ -12,26 +12,40 @@ import {
     <NuxtLink id="logo-link" to="/dashboard">
       <Logo size="xs" />
     </NuxtLink>
-    <ul class="flex flex-col">
-      <li>
-        <NuxtLink class="router-link" to="/dashboard">
-          <HomeIcon class="h-6 w-6" />
-          <span>Hjem</span>
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink class="router-link" to="/profile">
-          <UserIcon class="h-6 w-6" />
-          <span>Min profil</span>
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink class="router-link" to="/settings">
-          <Cog8ToothIcon class="h-6 w-6" />
-          <span>Indstillinger</span>
-        </NuxtLink>
-      </li>
-    </ul>
+    <div class="flex flex-col space-y-2">
+      <span class="text-zinc-400 uppercase text-sm">Generelt</span>
+      <ul class="flex flex-col">
+        <li>
+          <NuxtLink class="router-link" to="/dashboard">
+            <HomeIcon class="h-6 w-6" />
+            <span>Hjem</span>
+          </NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="router-link" to="/profile">
+            <UserIcon class="h-6 w-6" />
+            <span>Min profil</span>
+          </NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="router-link" to="/trades">
+            <ArrowsRightLeftIcon class="h-6 w-6" />
+            <span>Mine handler</span>
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
+    <div class="flex flex-col space-y-2">
+      <span class="text-zinc-400 uppercase text-sm">Konto</span>
+      <ul class="flex flex-col">
+        <li>
+          <NuxtLink class="router-link" to="/settings">
+            <Cog8ToothIcon class="h-6 w-6" />
+            <span>Indstillinger</span>
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 

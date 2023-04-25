@@ -13,6 +13,32 @@ const authStore = useAuthStore();
 
 <template>
   <section id="page-trades">
-    <TradeList :trades="storeToRefs(authStore).user.value.trades" />
+    <Tabs>
+      <Tab title="Anmodninger">
+        <TradeList
+          title="Anmodninger"
+          :trades="storeToRefs(authStore).user.value.trades"
+        />
+      </Tab>
+      <Tab title="Sendte">
+        <TradeList title="Sendte" :trades="[]" />
+      </Tab>
+      <Tab title="Igangværende">
+        <TradeList title="Igangværende" :trades="[]" />
+      </Tab>
+      <Tab title="Afsluttede">
+        <TradeList title="Afsluttede" :trades="[]" />
+      </Tab>
+    </Tabs>
   </section>
 </template>
+
+<style>
+#page-trades {
+  @apply flex flex-col;
+}
+
+#page-trades .tab {
+  @apply p-0;
+}
+</style>

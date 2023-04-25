@@ -4,6 +4,8 @@ import {
   ArrowRightIcon,
   ArrowUturnLeftIcon,
   ChatBubbleBottomCenterIcon,
+PencilIcon,
+TrashIcon,
 } from "@heroicons/vue/24/outline";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
@@ -47,6 +49,20 @@ const trade = await tradeStore.load(props.trade._id)
               <NuxtLink class="router-link" :to="`/trade/${trade._id}`"
                 ><ArrowRightIcon class="h-5 w-5" /><span
                   >Gå til handel</span
+                ></NuxtLink
+              >
+            </li>
+            <li v-if="trade.from.uuid == storeToRefs(authStore).user.value.uuid && !(trade.to.confirmed)">
+              <NuxtLink class="router-link" :to="`/trade/${trade._id}`"
+                ><PencilIcon class="h-5 w-5" /><span
+                  >Rediger handel</span
+                ></NuxtLink
+              >
+            </li>            
+            <li v-if="trade.from.uuid == storeToRefs(authStore).user.value.uuid && !(trade.to.confirmed)">
+              <NuxtLink class="router-link" :to="`/trade/${trade._id}`"
+                ><TrashIcon class="h-5 w-5" /><span
+                  >Slet handel</span
                 ></NuxtLink
               >
             </li>

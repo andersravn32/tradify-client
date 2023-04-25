@@ -82,22 +82,6 @@ const search = async (e) => {
         {{ results.length == 1 ? "resultat" : "resultater" }}
       </p>
     </div>
-    <div
-      v-if="selected"
-      class="flex items-center justify-between p-2 rounded odd:bg-zinc-900/50"
-    >
-      <User :user="selected" />
-      <Button
-        type="secondary"
-        size="sm"
-        @click="
-          selected = null;
-          $emit('reset');
-        "
-      >
-        Slet
-      </Button>
-    </div>
   </div>
 </template>
 

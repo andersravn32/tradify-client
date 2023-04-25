@@ -2,10 +2,13 @@
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 import useNotificationStore from "~/stores/NotificationStore";
+import useTradeStore from "~/stores/TradeStore";
+import useUserStore from "~/stores/UserStore";
 
 const authStore = useAuthStore();
 const notificationStore = useNotificationStore();
 const runtimeConfig = useRuntimeConfig();
+const userStore = useUserStore();
 const modal = useModal();
 const router = useRouter();
 
@@ -18,7 +21,7 @@ const props = defineProps({
 
 const trade = ref({
   to: {
-    uuid: props.user,
+    uuid: props.user ? props.user.uuid : null,
   },
   middleman: {
     uuid: null,
@@ -57,10 +60,14 @@ const create = async () => {
   modal.value.currentModal = "";
   modal.value.show = false;
   notificationStore.add("info", {
-    msg: `Du har nu oprettet en ny handel: ${data._id}`
+    msg: `Du har nu oprettet en ny handel: ${data._id}`,
   });
   return router.push(`/trade/${data._id}`);
 };
+
+onUnmounted(() => {
+  storeToRefs(userStore).user.value = null;
+});
 </script>
 
 <template>
@@ -68,7 +75,20 @@ const create = async () => {
     <h2 class="text-2xl text-zinc-50">Opret handel</h2>
     <div class="flex flex-col space-y-2">
       <label for="user">Modtager</label>
-      <FormUserSearch @done="(e) => (trade.to.uuid = e.uuid)" />
+      <div v-if="trade.to.uuid" class="flex items-center justify-between">
+        <User :user="trade.to" />
+        <Button type="tertiary" @click.prevent="trade.to.uuid = null"
+          >Slet</Button
+        >
+      </div>
+      <FormUserSearch
+        v-if="!trade.to.uuid"
+        @done="
+          (e) => {
+            trade.to = e;
+          }
+        "
+      />
     </div>
 
     <Input

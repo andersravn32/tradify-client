@@ -1,20 +1,17 @@
 <script setup>
 import {
-  ArrowsRightLeftIcon,
   EllipsisHorizontalIcon,
-  CalendarIcon,
   PencilIcon,
+  PlusIcon,
 } from "@heroicons/vue/24/outline";
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useNotificationStore from "~/stores/NotificationStore";
 import useUserStore from "~/stores/UserStore";
 
-const authStore = useAuthStore();
-const notificationStore = useNotificationStore();
-const runtimeConfig = useRuntimeConfig();
 const userStore = useUserStore();
+const authStore = useAuthStore();
+const modal = useModal();
 
 const props = defineProps({
   user: {
@@ -24,14 +21,20 @@ const props = defineProps({
 });
 
 const user = await userStore.find(props.user.uuid);
-
 </script>
 
 <template>
   <div class="user-profile">
     <div class="user-profile-header">
-      <UserCover :url="user.profile.cover" />
-      <UserAvatar size="xl" :url="user.profile.avatar" />
+      <UserCover
+        :allowediting="storeToRefs(authStore).user.value.uuid == user.uuid"
+        :url="user.profile.cover"
+      />
+      <UserAvatar
+        :alloweditting="storeToRefs(authStore).user.value.uuid == user.uuid"
+        size="xl"
+        :url="user.profile.avatar"
+      />
 
       <div class="user-details">
         <div class="flex flex-col">
@@ -48,8 +51,17 @@ const user = await userStore.find(props.user.uuid);
           />
         </div>
 
-        <div class="flex space-x-4">
-          <DropdownButton position="left">
+        <div class="flex space-x-4 items-center">
+          <Button
+            v-if="!(storeToRefs(authStore).user.value.uuid == user.uuid)"
+            @click="
+              storeToRefs(userStore).user.value = user;
+              modal.currentModal = 'modal-form-trade-create';
+              modal.show = true;
+            "
+            >Anmod</Button
+          >
+          <DropdownButton>
             <template #icon>
               <EllipsisHorizontalIcon class="h-6 w-6 text-zinc-50" />
             </template>

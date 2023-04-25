@@ -32,11 +32,11 @@ provide("selectedTitle", selectedTitle);
 }
 
 .tab-title {
-  @apply text-sm uppercase text-zinc-400 cursor-pointer hover:text-zinc-50;
+  @apply text-sm uppercase text-zinc-400 cursor-pointer hover:text-zinc-50 hover:bg-zinc-800 px-3 py-1 rounded;
 }
 
 .tab-title-active {
-  @apply text-zinc-50;
+  @apply text-zinc-50 bg-zinc-800;
 }
 
 .tab {

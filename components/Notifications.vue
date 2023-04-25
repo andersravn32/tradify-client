@@ -14,9 +14,7 @@ const notificationStore = useNotificationStore();
 </script>
 
 <template>
-  <ul
-    :class="`notifications notifications-${router.currentRoute.value.meta.layout}`"
-  >
+  <ul :class="`notifications notifications-${router.currentRoute.value.meta.layout}`">
     <li
       v-for="(notification, index) in storeToRefs(notificationStore).notifications
         .value"
@@ -60,7 +58,7 @@ const notificationStore = useNotificationStore();
 
 <style>
 .notifications {
-  @apply space-y-4 fixed z-20 flex flex-col;
+  @apply space-y-4 fixed z-10 flex flex-col;
 }
 
 .notification {

@@ -13,14 +13,14 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   }
 
   if (!refreshToken.value) {
-    return abortNavigation();
+    return "/"
   }
 
   if (!storeToRefs(authStore).user.value) {
     const { errors } = await authStore.refresh();
     if (errors) {
       authStore.clear();
-      return abortNavigation();
+      return "/";
     }
   }
 

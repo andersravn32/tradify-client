@@ -11,7 +11,7 @@ const notificationStore = useNotificationStore();
       <Navbar />
     </div>
     <div id="extra">
-      <Notifications v-if="storeToRefs(notificationStore).notifications.value.length" />
+      <Notifications />
     </div>
     <div id="content">
       <slot />

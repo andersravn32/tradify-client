@@ -8,7 +8,7 @@ const notificationStore = useNotificationStore();
 <template>
   <div id="layout-auth">
     <div id="extra">
-      <Notifications v-if="storeToRefs(notificationStore).notifications.value.length" />
+      <Notifications />
     </div>
     <div id="content">
       <slot />

@@ -28,7 +28,7 @@ const userStore = useUserStore();
       <Sidenav />
     </div>
     <div id="extra">
-      <Notifications v-if="storeToRefs(notificationStore).notifications.value.length"/>
+      <Notifications />
     </div>
     <div id="content">
       <slot />

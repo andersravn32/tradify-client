@@ -29,6 +29,7 @@ const router = useRouter();
 const modal = useModal();
 
 const user = await userStore.find(props.user.uuid);
+console.log(user)
 </script>
 
 <template>

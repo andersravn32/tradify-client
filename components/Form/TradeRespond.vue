@@ -111,11 +111,11 @@ const reject = async () => {
     </div>
     <div class="flex flex-col space-y-2">
       <label>Afsender</label>
-      <UserSmall class="w-full p-2 rounded bg-zinc-900/50" :user="trade.from" cardPosition="left" />
+      <User class="w-full p-2 rounded bg-zinc-900/50" :user="trade.from" cardPosition="left" />
     </div>
     <div v-if="trade.middleman.uuid" class="flex flex-col space-y-2">
       <label>Mellemmand</label>
-      <UserSmall class="w-full p-2 rounded bg-zinc-900/50" :user="trade.middleman" cardPosition="left" />
+      <User class="w-full p-2 rounded bg-zinc-900/50" :user="trade.middleman" cardPosition="left" />
     </div>
     <p class="text-xs text-zinc-400 py-2">
       Bemærk: Ved accept af denne handel acceptere du at modparten til hver en

@@ -1,4 +1,5 @@
 <script setup>
+
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useNotificationStore from "~/stores/NotificationStore";
@@ -16,8 +17,12 @@ defineProps({
   },
   cardPosition: {
     type: String,
-    default: "right"
-  }
+    default: "right",
+  },
+  size: {
+    type: String,
+    default: "sm",
+  },
 });
 
 const showUserCard = ref(false);
@@ -26,7 +31,8 @@ const notificationBuffer = ref([]);
 const displayUserCard = (e) => {
   if (!showUserCard.value && e.target.className != "overlay") {
     showUserCard.value = true;
-    notificationBuffer.value = storeToRefs(notificationStore).notifications.value;
+    notificationBuffer.value =
+      storeToRefs(notificationStore).notifications.value;
     storeToRefs(notificationStore).notifications.value = [];
   }
 };
@@ -53,12 +59,12 @@ const hideUserCard = (e) => {
     >
       <UserAvatar
         v-if="direction == 'ltr'"
-        size="sm"
+        :size="size"
         :url="user.profile.avatar"
       />
       <div class="user-details" :class="`user-details-${direction}`">
         <span
-          class="text-sm font-semibold text-zinc-50 flex items-center space-x-2"
+          class="font-semibold text-zinc-50 flex items-center space-x-2" :class="`text-${size}`"
         >
           <CheckBadgeIcon
             v-if="user.verified && direction == 'rtl'"
@@ -74,11 +80,17 @@ const hideUserCard = (e) => {
       </div>
       <UserAvatar
         v-if="direction == 'rtl'"
-        size="sm"
+        :size="size"
         :url="user.profile.avatar"
       />
     </div>
-    <UserCard v-if="showUserCard" @close="hideUserCard" :user="user" :position="cardPosition"/>
+
+    <UserCard
+      v-if="showUserCard"
+      @close="hideUserCard"
+      :user="user"
+      :position="cardPosition"
+    />
   </div>
 </template>
 

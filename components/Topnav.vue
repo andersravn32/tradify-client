@@ -26,7 +26,7 @@ const router = useRouter();
       </li>
       <li class="text-zinc-700">|</li>
       <li>
-        <UserSmall direction="rtl" :user="authStoreRefs.user.value" />
+        <User direction="rtl" :user="authStoreRefs.user.value" />
       </li>
     </ul>
   </nav>
@@ -34,6 +34,6 @@ const router = useRouter();
 
 <style>
 #topnav {
-  @apply fixed top-0 right-0 left-80 p-4 border-b-2 border-zinc-800 flex justify-between items-center text-zinc-100 z-10;
+  @apply fixed top-0 right-0 left-80 p-4 border-b-2 border-zinc-800 flex justify-between items-center text-zinc-100 z-20;
 }
 </style>

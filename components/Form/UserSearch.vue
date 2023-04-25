@@ -64,7 +64,7 @@ const search = async (e) => {
           v-for="user in results"
           class="flex items-center justify-between p-2 rounded odd:bg-zinc-900/50"
         >
-          <UserSmall :user="user" />
+          <User :user="user" />
           <Button
             type="primary"
             size="sm"
@@ -86,7 +86,7 @@ const search = async (e) => {
       v-if="selected"
       class="flex items-center justify-between p-2 rounded odd:bg-zinc-900/50"
     >
-      <UserSmall :user="selected" />
+      <User :user="selected" />
       <Button
         type="secondary"
         size="sm"

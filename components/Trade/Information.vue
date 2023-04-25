@@ -29,7 +29,7 @@ defineProps({
         </div>
         <div class="flex flex-col space-y-2" v-if="trade.middleman.uuid">
             <span class="text-zinc-400 uppercase">Mellemmand</span>
-            <UserSmall :user="trade.middleman" />
+            <User :user="trade.middleman" />
         </div>
     </div>
 </template>

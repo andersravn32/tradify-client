@@ -34,8 +34,8 @@ const trade = await tradeStore.load(props.trade._id)
     <span class="font-bold text-zinc-50 text-sm">{{
       trade.category ? trade.category : "-"
     }}</span>
-    <UserSmall :user="trade.from" />
-    <UserSmall :user="trade.to" />
+    <User :user="trade.from" />
+    <User :user="trade.to" />
     <div class="flex items-center space-x-4">
       <DropdownButton>
         <template #icon>

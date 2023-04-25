@@ -20,12 +20,6 @@ import {
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink class="router-link" to="/trades">
-          <ArrowsRightLeftIcon class="w-6 h-6" />
-          <span>Mine handler</span>
-        </NuxtLink>
-      </li>
-      <li>
         <NuxtLink class="router-link" to="/profile">
           <UserIcon class="h-6 w-6" />
           <span>Min profil</span>
@@ -43,7 +37,7 @@ import {
 
 <style>
 #sidenav {
-  @apply fixed top-0 bottom-0 left-0 w-80 p-4 border-r-2 border-zinc-800 flex flex-col space-y-8 z-10;
+  @apply fixed top-0 bottom-0 left-0 w-80 p-4 border-r-2 border-zinc-800 flex flex-col space-y-8 z-20;
 }
 
 #sidenav .router-link {

@@ -8,7 +8,6 @@ const router = useRouter();
 const tradeStore = useTradeStore();
 const notificationStore = useNotificationStore()
 const userStore = useUserStore();
-
 </script>
 
 <template>
@@ -27,7 +26,6 @@ const userStore = useUserStore();
     <div id="navigation">
       <Topnav />
       <Sidenav />
-      <Sidebar v-if="!(router.currentRoute.value.meta.sidebar)" />
     </div>
     <div id="extra">
       <Notifications v-if="storeToRefs(notificationStore).notifications.value.length"/>
@@ -40,6 +38,6 @@ const userStore = useUserStore();
 
 <style>
 #layout-app #content {
-  @apply pl-80 pt-[74px] pr-80 min-h-screen;
+  @apply pl-80 pt-[74px] min-h-screen;
 }
 </style>

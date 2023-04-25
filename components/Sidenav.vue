@@ -4,7 +4,12 @@ import {
   ArrowsRightLeftIcon,
   UserIcon,
   Cog8ToothIcon,
+  WrenchIcon,
 } from "@heroicons/vue/24/outline";
+import { storeToRefs } from "pinia";
+import useAuthStore from "~/stores/AuthStore";
+
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -42,6 +47,20 @@ import {
           <NuxtLink class="router-link" to="/settings">
             <Cog8ToothIcon class="h-6 w-6" />
             <span>Indstillinger</span>
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
+    <div
+      v-if="storeToRefs(authStore).user.value.role.permissionLevel >= 5"
+      class="flex flex-col space-y-2"
+    >
+      <span class="text-zinc-400 uppercase text-sm">Administration</span>
+      <ul class="flex flex-col">
+        <li>
+          <NuxtLink class="router-link" to="/settings">
+            <WrenchIcon class="h-6 w-6" />
+            <span>Administration</span>
           </NuxtLink>
         </li>
       </ul>

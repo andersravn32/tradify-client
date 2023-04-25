@@ -61,7 +61,7 @@ const user = await userStore.find(props.user.uuid);
             "
             >Anmod</Button
           >
-          <DropdownButton>
+          <DropdownButton position="bottom">
             <template #icon>
               <EllipsisHorizontalIcon class="h-6 w-6 text-zinc-50" />
             </template>
@@ -79,12 +79,17 @@ const user = await userStore.find(props.user.uuid);
         </div>
       </div>
     </div>
+    <TradeList title="Seneste handler" :trades="[]" />
   </div>
 </template>
 
 <style>
 .user-profile {
-  @apply flex flex-col space-y-4;
+  @apply flex flex-col;
+}
+
+.user-profile-header {
+  @apply border-b-2 border-zinc-800
 }
 
 .user-profile .user-cover {
@@ -92,11 +97,11 @@ const user = await userStore.find(props.user.uuid);
 }
 
 .user-profile .user-avatar {
-  @apply absolute -translate-y-1/2 ml-4;
+  @apply absolute -translate-y-3/4 ml-4;
 }
 
 .user-profile .user-details {
-  @apply mt-16 p-4 flex justify-between;
+  @apply mt-8 p-4 flex justify-between;
 }
 
 .user-profile .router-link {

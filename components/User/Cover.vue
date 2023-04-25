@@ -3,13 +3,43 @@ import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 
 const authStore = useAuthStore();
+const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps({
   url: {
     type: String,
     default: null,
   },
+  allowediting: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+const handleUpload = async (e) => {
+  if (!e.target.files[0]) {
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("avatar", e.target.files[0]);
+  await fetch(
+    `${runtimeConfig.public.backendUrl}/user/${
+      storeToRefs(authStore).user.value.uuid
+    }/profile/avatar`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: storeToRefs(authStore).accessToken.value,
+      },
+      body: formData,
+    }
+  ).then((res) => res.json());
+
+  notificationStore.add("info", {
+    msg: "Du har nu skiftet dit coverbillede. ",
+  });
+};
 </script>
 
 <template>

@@ -1,12 +1,13 @@
 <script setup>
-
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
 import useNotificationStore from "~/stores/NotificationStore";
+import useUserStore from "~/stores/UserStore";
 
 const notificationStore = useNotificationStore();
+const userStore = useUserStore();
 
-defineProps({
+const props = defineProps({
   user: {
     type: Object,
     required: true,
@@ -23,6 +24,10 @@ defineProps({
     type: String,
     default: "sm",
   },
+});
+
+const user = ref({
+  ...props.user,
 });
 
 const showUserCard = ref(false);
@@ -49,6 +54,10 @@ const hideUserCard = (e) => {
     });
   }
 };
+
+if (!user.value.identifier) {
+  user.value = await userStore.find(user.value.uuid);
+}
 </script>
 
 <template>
@@ -64,7 +73,8 @@ const hideUserCard = (e) => {
       />
       <div class="user-details" :class="`user-details-${direction}`">
         <span
-          class="font-semibold text-zinc-50 flex items-center space-x-2" :class="`text-${size}`"
+          class="font-semibold text-zinc-50 flex items-center space-x-2"
+          :class="`text-${size}`"
         >
           <CheckBadgeIcon
             v-if="user.verified && direction == 'rtl'"

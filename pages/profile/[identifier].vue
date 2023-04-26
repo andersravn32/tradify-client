@@ -1,7 +1,4 @@
 <script setup>
-import { storeToRefs } from "pinia";
-import useAuthStore from "~/stores/AuthStore";
-import useNotificationStore from "~/stores/NotificationStore";
 import useUserStore from "~/stores/UserStore";
 
 definePageMeta({

@@ -29,12 +29,15 @@ storeToRefs(tradeStore).trade.value = await tradeStore.load(
       <Tab
         title="Kommunikation"
         :hidden="
-          !(storeToRefs(authStore).user.value.uuid ==
-            storeToRefs(tradeStore).trade.value.from.uuid ||
-          storeToRefs(authStore).user.value.uuid ==
-            storeToRefs(tradeStore).trade.value.to.uuid)
+          !(
+            storeToRefs(authStore).user.value.uuid ==
+              storeToRefs(tradeStore).trade.value.from.uuid ||
+            storeToRefs(authStore).user.value.uuid ==
+              storeToRefs(tradeStore).trade.value.to.uuid
+          )
         "
       >
+        <TradeCommunication :trade="storeToRefs(tradeStore).trade.value" />
       </Tab>
     </Tabs>
   </section>

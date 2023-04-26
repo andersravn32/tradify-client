@@ -27,7 +27,10 @@ const authStore = useAuthStore();
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink class="router-link" to="/profile">
+          <NuxtLink
+            class="router-link"
+            :to="`/profile/${storeToRefs(authStore).user.value.identifier}`"
+          >
             <UserIcon class="h-6 w-6" />
             <span>Min profil</span>
           </NuxtLink>

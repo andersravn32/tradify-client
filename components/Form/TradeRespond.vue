@@ -1,7 +1,6 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
-import useTradeStore from "~/stores/TradeStore";
 import useNotificationStore from "~/stores/NotificationStore";
 
 const props = defineProps({
@@ -14,7 +13,6 @@ const props = defineProps({
 const authStore = useAuthStore();
 const runtimeConfig = useRuntimeConfig();
 const modal = useModal();
-const tradeStore = useTradeStore();
 const notificationStore = useNotificationStore();
 const router = useRouter();
 
@@ -43,10 +41,6 @@ const accept = async () => {
 
   modal.value.currentModal = "";
   modal.value.show = false;
-  storeToRefs(tradeStore).trade.value = await tradeStore.load(
-    props.trade._id,
-    true
-  );
 
   notificationStore.add("info", {
     msg: `Du har besvaret handel: ${props.trade._id}`,
@@ -82,11 +76,6 @@ const reject = async () => {
 
   modal.value.currentModal = "";
   modal.value.show = false;
-
-  storeToRefs(tradeStore).trade.value = await tradeStore.load(
-    props.trade._id,
-    true
-  );
 
   notificationStore.add("info", {
     msg: `Du har besvaret handel: ${props.trade._id}`,

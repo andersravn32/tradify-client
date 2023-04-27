@@ -2,7 +2,6 @@
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 import useNotificationStore from "~/stores/NotificationStore";
-import useTradeStore from "~/stores/TradeStore";
 
 const props = defineProps({
   trade: {
@@ -14,7 +13,6 @@ const props = defineProps({
 const runtimeConfig = useRuntimeConfig();
 const authStore = useAuthStore();
 const modal = useModal();
-const tradeStore = useTradeStore();
 const notificationStore = useNotificationStore();
 const router = useRouter();
 
@@ -70,7 +68,6 @@ const rate = async () => {
 
   modal.value.currentModal = "";
   modal.value.show = false;
-  storeToRefs(tradeStore).trade.value = await tradeStore.load(props.trade._id, true);
 
   notificationStore.add("info", {
     msg: `Du har afgivet din bedømmelse af handel: ${props.trade._id}`

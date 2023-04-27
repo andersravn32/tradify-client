@@ -13,15 +13,17 @@ defineProps({
     type: Boolean,
     default: false,
   },
+
+  disabled: {
+    type: Boolean,
+    default: false
+  }
 });
 </script>
 
 <template>
-  <button
-    :class="`btn ${size ? `btn-size-${size}` : ''} ${
-      type ? `btn-${type}` : ''
-    } ${loading ? 'btn-loading' : ''}`"
-  >
+  <button :class="`btn ${size ? `btn-size-${size}` : ''} ${type ? `btn-${type}` : ''
+    } ${loading ? 'btn-loading' : ''} ${disabled ? 'btn-disabled' : ''}`">
     <slot v-if="!loading" />
     <span v-if="loading">Loading...</span>
   </button>
@@ -56,11 +58,15 @@ defineProps({
   @apply font-semibold text-indigo-500 hover:text-indigo-600 focus:outline-indigo-500 py-0 px-0;
 }
 
-.btn-icon{
+.btn-icon {
   @apply bg-zinc-800 p-2 rounded-full hover:bg-zinc-700;
 }
 
 .btn-loading {
   @apply opacity-90 cursor-not-allowed;
+}
+
+.btn-disabled {
+  @apply opacity-75 cursor-not-allowed;
 }
 </style>

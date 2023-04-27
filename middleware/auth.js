@@ -13,7 +13,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   }
 
   if (!refreshToken.value) {
-    return "/"
+    return "/signin"
   }
 
   if (!storeToRefs(authStore).user.value) {

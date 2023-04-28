@@ -66,7 +66,7 @@ const user = await userStore.find(props.user.uuid);
             "
             >Anmod</Button
           >
-          <DropdownButton position="bottom">
+          <DropdownButton position="left">
             <template #icon>
               <EllipsisHorizontalIcon class="h-6 w-6 text-zinc-50" />
             </template>
@@ -89,7 +89,7 @@ const user = await userStore.find(props.user.uuid);
         <TradeCounter size="lg" :trades="user.trades" :uuid="user.uuid" />
       </Tab>
       <Tab title="Seneste handler">
-        <TradeList :trades="[]" />
+        <TradeList :trades="[user.trades[0], user.trades[1]]" />
       </Tab>
     </Tabs>
   </div>
@@ -104,15 +104,15 @@ const user = await userStore.find(props.user.uuid);
   @apply border-b-2 border-zinc-800;
 }
 
-.user-profile .user-cover {
+.user-profile .user-profile-header .user-cover {
   @apply h-48;
 }
 
-.user-profile .user-avatar {
+.user-profile .user-profile-header .user-avatar {
   @apply absolute -translate-y-3/4 ml-4;
 }
 
-.user-profile .user-details {
+.user-profile .user-profile-header .user-details {
   @apply mt-8 p-4 flex justify-between;
 }
 

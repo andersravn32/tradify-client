@@ -1,4 +1,8 @@
 <script setup>
+import useAuthStore from '~/stores/AuthStore';
+
+const authStore = useAuthStore();
+
 defineProps({
   trades: {
     type: Array,

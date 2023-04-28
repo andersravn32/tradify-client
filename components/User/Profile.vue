@@ -2,7 +2,6 @@
 import {
   EllipsisHorizontalIcon,
   PencilIcon,
-  PlusIcon,
 } from "@heroicons/vue/24/outline";
 import { CheckBadgeIcon } from "@heroicons/vue/24/solid";
 import { storeToRefs } from "pinia";
@@ -49,6 +48,12 @@ const user = await userStore.find(props.user.uuid);
             class="mt-2"
             :role="user.role"
           />
+          <p
+            v-if="user.profile.bio"
+            class="text-sm w-full max-w-2xl mt-2 text-zinc-50"
+          >
+            {{ user.profile.bio }}
+          </p>
         </div>
 
         <div class="flex space-x-4 items-center">
@@ -79,7 +84,14 @@ const user = await userStore.find(props.user.uuid);
         </div>
       </div>
     </div>
-    <TradeList title="Seneste handler" :trades="[]" />
+    <Tabs>
+      <Tab title="Bedømmelser">
+        <TradeCounter size="lg" :trades="user.trades" :uuid="user.uuid" />
+      </Tab>
+      <Tab title="Seneste handler">
+        <TradeList :trades="[]" />
+      </Tab>
+    </Tabs>
   </div>
 </template>
 
@@ -89,7 +101,7 @@ const user = await userStore.find(props.user.uuid);
 }
 
 .user-profile-header {
-  @apply border-b-2 border-zinc-800
+  @apply border-b-2 border-zinc-800;
 }
 
 .user-profile .user-cover {
@@ -106,5 +118,9 @@ const user = await userStore.find(props.user.uuid);
 
 .user-profile .router-link {
   @apply font-semibold flex items-center space-x-2 text-zinc-400 hover:text-zinc-50 text-xs cursor-pointer;
+}
+
+.user-profile .trade-list-header {
+  @apply pt-0;
 }
 </style>

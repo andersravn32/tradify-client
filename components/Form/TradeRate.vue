@@ -2,6 +2,7 @@
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 import useNotificationStore from "~/stores/NotificationStore";
+import useTradeStore from "~/stores/TradeStore";
 
 const props = defineProps({
   trade: {
@@ -14,6 +15,7 @@ const runtimeConfig = useRuntimeConfig();
 const authStore = useAuthStore();
 const modal = useModal();
 const notificationStore = useNotificationStore();
+const tradeStore = useTradeStore();
 const router = useRouter();
 
 const loading = ref(false);
@@ -24,7 +26,7 @@ const rating = ref({
 });
 
 const rate = async () => {
-  if (loading.value){
+  if (loading.value) {
     return;
   }
 
@@ -69,8 +71,29 @@ const rate = async () => {
   modal.value.currentModal = "";
   modal.value.show = false;
 
+  if (storeToRefs(authStore).user.value.uuid == props.trade.from.uuid) {
+    props.trade.from.rating = {
+      message: rating.value.message,
+      value: Number(rating.value.value),
+    };
+  }
+
+  if (storeToRefs(authStore).user.value.uuid == props.trade.to.uuid) {
+    props.trade.to.rating = {
+      message: rating.value.message,
+      value: Number(rating.value.value),
+    };
+  }
+
+  if (storeToRefs(authStore).user.value.uuid == props.trade.middleman.uuid) {
+    props.trade.middleman.rating = {
+      message: rating.value.message,
+      value: Number(rating.value.value),
+    };
+  }
+
   notificationStore.add("info", {
-    msg: `Du har afgivet din bedømmelse af handel: ${props.trade._id}`
+    msg: `Du har afgivet din bedømmelse af handel: ${props.trade._id}`,
   });
 
   if (!(router.currentRoute.value.fullPath == `/trade/${props.trade._id}`)) {

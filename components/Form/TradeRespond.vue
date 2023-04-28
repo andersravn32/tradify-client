@@ -2,6 +2,7 @@
 import { storeToRefs } from "pinia";
 import useAuthStore from "~/stores/AuthStore";
 import useNotificationStore from "~/stores/NotificationStore";
+import useTradeStore from "~/stores/TradeStore";
 
 const props = defineProps({
   trade: {
@@ -14,6 +15,7 @@ const authStore = useAuthStore();
 const runtimeConfig = useRuntimeConfig();
 const modal = useModal();
 const notificationStore = useNotificationStore();
+const tradeStore = useTradeStore();
 const router = useRouter();
 
 const accept = async () => {
@@ -41,6 +43,18 @@ const accept = async () => {
 
   modal.value.currentModal = "";
   modal.value.show = false;
+
+  if (storeToRefs(authStore).user.value.uuid == props.trade.from.uuid){
+    storeToRefs(tradeStore).trade.value.from.confirmed = 1;
+  }
+
+  if (storeToRefs(authStore).user.value.uuid == props.trade.to.uuid){
+    storeToRefs(tradeStore).trade.value.to.confirmed = 1;
+  }
+
+  if (storeToRefs(authStore).user.value.uuid == props.trade.middleman.uuid){
+    storeToRefs(tradeStore).trade.value.middleman.confirmed = 1;
+  }
 
   notificationStore.add("info", {
     msg: `Du har besvaret handel: ${props.trade._id}`,
@@ -77,6 +91,19 @@ const reject = async () => {
   modal.value.currentModal = "";
   modal.value.show = false;
 
+  if (storeToRefs(authStore).user.value.uuid == props.trade.from.uuid){
+    storeToRefs(tradeStore).trade.value.from.confirmed = -1;
+  }
+
+  if (storeToRefs(authStore).user.value.uuid == props.trade.to.uuid){
+    storeToRefs(tradeStore).trade.value.to.confirmed = -1;
+  }
+
+  if (storeToRefs(authStore).user.value.uuid == props.trade.middleman.uuid){
+    storeToRefs(tradeStore).trade.value.middleman.confirmed = -1;
+  }
+
+
   notificationStore.add("info", {
     msg: `Du har besvaret handel: ${props.trade._id}`,
   });
@@ -100,11 +127,19 @@ const reject = async () => {
     </div>
     <div class="flex flex-col space-y-2">
       <label>Afsender</label>
-      <User class="w-full p-2 rounded bg-zinc-900/50" :user="trade.from" cardPosition="left" />
+      <User
+        class="w-full p-2 rounded bg-zinc-900/50"
+        :user="trade.from"
+        cardPosition="left"
+      />
     </div>
     <div v-if="trade.middleman.uuid" class="flex flex-col space-y-2">
       <label>Mellemmand</label>
-      <User class="w-full p-2 rounded bg-zinc-900/50" :user="trade.middleman" cardPosition="left" />
+      <User
+        class="w-full p-2 rounded bg-zinc-900/50"
+        :user="trade.middleman"
+        cardPosition="left"
+      />
     </div>
     <p class="text-xs text-zinc-400 py-2">
       Bemærk: Ved accept af denne handel acceptere du at modparten til hver en

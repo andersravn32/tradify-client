@@ -3,11 +3,12 @@ import { storeToRefs } from "pinia";
 import useTradeStore from "~/stores/TradeStore";
 import useNotificationStore from "~/stores/NotificationStore"
 import useUserStore from "~/stores/UserStore";
+import useAuthStore from "~/stores/AuthStore";
 
 const router = useRouter();
 const tradeStore = useTradeStore();
-const notificationStore = useNotificationStore()
 const userStore = useUserStore();
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -38,6 +39,6 @@ const userStore = useUserStore();
 
 <style>
 #layout-app #content {
-  @apply pl-80 pt-[74px] min-h-screen;
+  @apply pl-80 pt-[74px] pr-80 min-h-screen;
 }
 </style>
